@@ -4,15 +4,16 @@
         <div class="ms-login">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
                 <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" placeholder="username"></el-input>
+                    <el-input v-model="ruleForm.username" @change="message = null" placeholder="username"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password"
+                    <el-input type="password" @change="message = null" placeholder="password" v-model="ruleForm.password"
                               @keyup.enter.native="submitForm('ruleForm')"></el-input>
                 </el-form-item>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
                 </div>
+                <div class="el-form-item__error" v-if="!!message" style="position: static">{{message}}</div>
             </el-form>
         </div>
     </div>
@@ -22,6 +23,7 @@
     export default {
         data: function () {
             return {
+                message: '',
                 ruleForm: {
                     username: '',
                     password: ''
@@ -50,12 +52,12 @@
                                 localStorage.setItem('ms_username', self.ruleForm.username);
                                 self.$router.push('/readme');
                             } else {
-                                alert(response.data.msg);
+                                self.message = response.data.msg;
                             }
                         }).catch(function (err) {
-                            console.log(err);
-                            alert("连接服务器失败！");
-                        });
+                            console.log(err)
+                            self.message = "连接服务器失败！"
+                        })
                     } else {
                         console.log('error submit!!');
                         return false;
