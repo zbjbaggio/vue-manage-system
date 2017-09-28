@@ -41,34 +41,21 @@
                 const self = this;
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
-                        //
+                        //登录
                         self.$axios.post("/springbootbase/login", {
                             username: self.ruleForm.username,
                             password: self.ruleForm.password
                         }).then(function (response) {
-                            console.log("--------------------" + response.data.status);
                             if (response.data.status == 200) {
                                 localStorage.setItem('ms_username', self.ruleForm.username);
                                 self.$router.push('/readme');
                             } else {
                                 alert(response.data.msg);
                             }
-
                         }).catch(function (err) {
                             console.log(err);
+                            alert("连接服务器失败！");
                         });
-
-                       /* self.$axios({
-                            method: 'POST',
-                            url: '/springbootbase/login',
-                            data: {
-                                username: self.ruleForm.username,
-                                password: self.ruleForm.password
-                            },
-                            headers: {'Content-Type': 'application/json'}
-                        }).then(function(res) {
-                            console.log(res)
-                        })*/
                     } else {
                         console.log('error submit!!');
                         return false;
