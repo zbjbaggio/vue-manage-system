@@ -30,6 +30,21 @@
                         title: '自述'
                     },
                     {
+                        icon: 'el-icon-setting',
+                        index: 'systemManager',
+                        title: '系统管理',
+                        subs: [
+                            {
+                                index: 'userManager',
+                                title: '用户管理'
+                            },
+                            {
+                                index: 'vuetable',
+                                title: 'Vue表格组件'
+                            }
+                        ]
+                    },
+                    {
                         icon: 'el-icon-menu',
                         index: '2',
                         title: '表格',

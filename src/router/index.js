@@ -17,6 +17,11 @@ export default new Router({
                     path: '/',
                     component: resolve => require(['../components/page/Readme.vue'], resolve)
                 },
+
+                {
+                    path: '/userManager',
+                    component: resolve => require(['../components/page/UserManager.vue'], resolve)
+                },
                 {
                     path: '/basetable',
                     component: resolve => require(['../components/page/BaseTable.vue'], resolve)

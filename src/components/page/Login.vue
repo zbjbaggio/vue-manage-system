@@ -30,7 +30,8 @@
                 },
                 rules: {
                     username: [
-                        {required: true, message: '请输入用户名', trigger: 'blur'}
+                        {required: true, message: '请输入用户名', trigger: 'blur'},
+                        {min:5, max: 30, message: '长度在 5 到 30 个字符', trigger: 'blur' }
                     ],
                     password: [
                         {required: true, message: '请输入密码', trigger: 'blur'}
@@ -50,16 +51,18 @@
                         }).then(function (response) {
                             if (response.data.status == 200) {
                                 localStorage.setItem('ms_username', self.ruleForm.username);
+                                localStorage.setItem('key', response.data.data.key);
+                                localStorage.setItem('token', response.data.data.token);
+                                console.log(response.data.data.token);
                                 self.$router.push('/readme');
                             } else {
                                 self.message = response.data.msg;
                             }
                         }).catch(function (err) {
-                            console.log(err)
+                            console.log(err);
                             self.message = "连接服务器失败！"
                         })
                     } else {
-                        console.log('error submit!!');
                         return false;
                     }
                 });
