@@ -49,11 +49,11 @@
                             username: self.ruleForm.username,
                             password: self.ruleForm.password
                         }).then(function (response) {
-                            if (response.data.status == 200) {
+                            console.log(response)
+                            if (response.status == 200) {
                                 localStorage.setItem('ms_username', self.ruleForm.username);
-                                localStorage.setItem('key', response.data.data.key);
-                                localStorage.setItem('token', response.data.data.token);
-                                console.log(response.data.data.token);
+                                localStorage.setItem('key', response.data.key);
+                                localStorage.setItem('token', response.data.token);
                                 self.$router.push('/readme');
                             } else {
                                 self.message = response.data.msg;

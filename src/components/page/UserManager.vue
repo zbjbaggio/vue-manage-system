@@ -38,7 +38,7 @@
                     <el-button size="small"
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>
-                    <el-button size="small" type="warning"
+                    <el-button size="small" type="warning" v-if="scope.row.status != 2"
                                @click="handleFreeze(scope.row.id)">冻结
                     </el-button>
                     <el-button size="small" type="danger"
