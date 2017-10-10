@@ -14,13 +14,17 @@ export default new Router({
             component: resolve => require(['../components/common/Home.vue'], resolve),
             children:[
                 {
-                    path: '/',
-                    component: resolve => require(['../components/page/Readme.vue'], resolve)
-                },
-
-                {
                     path: '/userManager',
                     component: resolve => require(['../components/page/UserManager.vue'], resolve)
+                },
+                {
+                    path: '',
+                    component: resolve => require(['../components/page/Readme.vue'], resolve)
+                },
+                {
+                    path: '/userDetail',
+                    name: 'userDetail',
+                    component: resolve => require(['../components/page/UserDetail.vue'], resolve)
                 },
                 {
                     path: '/basetable',

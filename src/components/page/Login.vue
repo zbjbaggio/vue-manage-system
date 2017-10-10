@@ -4,10 +4,10 @@
         <div class="ms-login">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
                 <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" @change="message = null" placeholder="username"></el-input>
+                    <el-input v-model="ruleForm.username" @change="message = null" placeholder="用户名"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" @change="message = null" placeholder="password" v-model="ruleForm.password"
+                    <el-input type="password" @change="message = null" placeholder="密码" v-model="ruleForm.password"
                               @keyup.enter.native="submitForm('ruleForm')"></el-input>
                 </el-form-item>
                 <div class="login-btn">
@@ -49,14 +49,13 @@
                             username: self.ruleForm.username,
                             password: self.ruleForm.password
                         }).then(function (response) {
-                            console.log(response)
                             if (response.status == 200) {
                                 localStorage.setItem('ms_username', self.ruleForm.username);
                                 localStorage.setItem('key', response.data.key);
                                 localStorage.setItem('token', response.data.token);
                                 self.$router.push('/readme');
                             } else {
-                                self.message = response.data.msg;
+                                self.message = response.msg;
                             }
                         }).catch(function (err) {
                             console.log(err);

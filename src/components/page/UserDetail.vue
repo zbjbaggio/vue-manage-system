@@ -1,0 +1,114 @@
+<template>
+    <div>
+        <div class="crumbs">
+            <el-breadcrumb separator="/">
+                <el-breadcrumb-item><i class="el-icon-setting"></i> 系统管理</el-breadcrumb-item>
+                <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+                <el-breadcrumb-item>用户详情</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="form-box" v-loading="loading2" element-loading-text="拼命加载中">
+            <el-form ref="form" :model="form" label-width="80px" :rules="rules">
+                <el-form-item label="用户名" prop="username">
+                    <el-input v-model="form.username" @change="message = null" placeholder="用户名"></el-input>
+                </el-form-item>
+                <el-form-item label="姓名" prop="name">
+                    <el-input v-model="form.name" @change="message = null" placeholder="姓名"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号" prop="phone">
+                    <el-input v-model="form.phone" @change="message = null" placeholder="手机号"></el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email">
+                    <el-input v-model="form.email" @change="message = null" placeholder="邮箱"></el-input>
+                </el-form-item>
+                <el-form-item label="创建时间">
+                    <el-input v-model="form.create_time" :disabled=true></el-input>
+                </el-form-item>
+                <el-form-item label="状态" prop="status">
+                    <el-radio-group v-model="form.status">
+                        <el-radio style="margin-left :10px" :label="item.value" v-for="item in status">{{item.text}}
+                        </el-radio>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="onSubmit('form')">提交</el-button>
+                    <el-button @click="onReturn">取消</el-button>
+                </el-form-item>
+            </el-form>
+        </div>
+    </div>
+</template>
+
+<script>
+    //import {aaa} from '../../utls/index'
+    export default {
+        created(){
+            this.loading2 = true;
+            this.$axios.get("/springbootbase/user/userManager/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
+                this.loading2 = false;
+                this.form.id = res.data.id;
+                this.form.username = res.data.username;
+                this.form.name = res.data.name;
+                this.form.phone = res.data.phone;
+                this.form.email = res.data.email;
+                this.form.create_time = res.data.create_time;
+                this.form.status = res.data.status;
+            });
+        },
+        data: function () {
+            return {
+                test: true,
+                rules: {
+                    username: this.RULE_USERNAME,
+                    name: [
+                        {required: true, message: '请输入姓名', trigger: 'blur'},
+                        {min: 2, max: 30, message: '长度在 2 到 30 个字符', trigger: 'blur'}
+                    ],
+                    phone: [
+                        {required: true, message: '请输入手机号', trigger: 'blur'},
+                        {min: 11, max: 11, message: '手机号格式不正确！', trigger: 'blur'}
+                    ],
+                    email: [
+                        {required: true, message: '请输入邮箱', trigger: 'blur'},
+                        {pattern: this.REGULAR_EXPRESSION_CONSTANT_EMAIL, message: '邮箱格式不正确！', trigger: 'blur'}
+                    ],
+                    status: [
+                        {required: true, message: '请选择状态', trigger: 'change', type: 'number'}
+                    ],
+                },
+                form: {
+                    id: '',
+                    username: '',
+                    name: '',
+                    phone: '',
+                    email: '',
+                    create_time: '',
+                    status: 0
+                },
+                status: [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '冻结', value: 2}],
+                loading2: false
+            }
+        },
+        methods: {
+            onSubmit(formName) {
+                const self = this;
+                self.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.$axios.post("/springbootbase/user/userManager/update", this.form).then((res) => {
+                            if (res.status == 200) {
+                                this.$message.success('提交成功！');
+                            } else {
+                                this.$message.success(res.msg);
+                            }
+                        });
+                    } else {
+                        return false;
+                    }
+                });
+            },
+            onReturn() {
+                this.$router.push("/userManager");
+            }
+        }
+    }
+</script>

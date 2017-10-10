@@ -2,36 +2,33 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-menu"></i> 系统管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-setting"></i> 系统管理</el-breadcrumb-item>
                 <el-breadcrumb-item>用户管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="handle-box">
             <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
-            <el-select v-model="select_cate" placeholder="筛选状态" class="handle-select mr10">
+            <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
                 <el-option key="0" label="未激活" value=0></el-option>
                 <el-option key="1" label="正常" value=1></el-option>
                 <el-option key="2" label="冻结" value=2></el-option>
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-            <el-button type="primary" icon="search" @click="search">搜索</el-button>
+            <el-button type="primary" icon="search" @click="getData">搜索</el-button>
         </div>
-        <el-table :data="bbbb" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+        <el-table :data="table" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="create_time" label="创建日期" sortable width="170">
             </el-table-column>
-            <el-table-column prop="username" label="用户名" width="120">
+            <el-table-column prop="username" label="用户名" width="200">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="120">
+            <el-table-column prop="name" label="姓名" width="200">
             </el-table-column>
-            <el-table-column prop="phone" label="手机号" width="130">
+            <el-table-column prop="phone" label="手机号" width="200">
             </el-table-column>
-            <el-table-column prop="email" label="Email" width="200">
+            <el-table-column prop="email" label="邮箱" width="250">
             </el-table-column>
-            <el-table-column prop="status" label="状态"
-                             :filters=user_status
-                             :filter-method="filterTag"
-                             filter-placement="bottom-end" width="180">
+            <el-table-column prop="statusStr" label="状态">
             </el-table-column>
             <el-table-column label="操作" width="200">
                 <template scope="scope">
@@ -65,69 +62,53 @@
                 tableData: [],
                 cur_page: 1,
                 multipleSelection: [],
-                select_cate: '',
+                select_status: '',
                 select_word: '',
                 del_list: [],
                 is_search: false,
-                user_status:[{text:'未激活',value:0},{text:'正常',value:1},{text:'冻结',value:2}],
-                count:0,
-                pageSize:10
+                user_status: [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '冻结', value: 2}],
+                count: 0,
+                pageSize: 10
             }
         },
         created(){
             this.getData();
         },
         computed: {
-            bbbb (){
+            table(){
                 const self = this;
-                return self.tableData.filter(function (d) {
-//                    let is_del = false;
-//                    for (let i = 0; i < self.del_list.length; i++) {
-//                        if(d.name === self.del_list[i].name){
-//                            is_del = true;
-//                            break;
-//                        }
-//                    }
-//                    if(!is_del){
-//                        if(d.address.indexOf(self.select_cate) > -1 &&
-//                            (d.name.indexOf(self.select_word) > -1 ||
-//                            d.address.indexOf(self.select_word) > -1)
-//                        ){
-//                            return d;
-//                        }
-//                    }
-                    return true
-                })
+                return self.tableData;
             }
         },
         methods: {
-            filterTag(value, row) {
-                return row.tag === value;
-            },
             handleCurrentChange(val){
                 this.cur_page = val;
                 this.getData();
             },
             getData(){
                 let self = this;
-                self.$axios.get("/springbootbase/user/user/manager/list", {params:{page: self.cur_page}}).then((res) => {
-                    self.tableData = res.data.list;
-                    self.count = res.data.count;
+                self.$axios.get("/springbootbase/user/userManager/list", {params: {page: self.cur_page,status:self.select_status}}).then((res) => {
+                    if (res.status == 200) {
+                        if (!!res.data.list) {
+                            for (var i = 0; i < res.data.list.length; i++) {
+                                if (res.data.list[i].status == 1) {
+                                    res.data.list[i].statusStr = "正常";
+                                }
+                            }
+                        }
+                        self.tableData = res.data.list;
+                        console.log(self.tableData);
+                        self.count = res.data.count;
+                    } else {
+                        this.$message.fail("查询失败！")
+                    }
                 })
             },
             search(){
                 this.is_search = true;
             },
-            formatter(row, column) {
-                return row.state;
-            },
-            filterTag(value, row) {
-                return row.tag === value;
-            },
             handleEdit(userId) {
-                this.$axios.get("/springbootbase/user/user/manager/detail", {params:{userId: userId}}).then((res) => {
-                    console.log(res)
-                })
+                this.$router.push({name: 'userDetail', query: {userId: userId}});
             },
             handleDelete(userId) {
                 this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
@@ -152,15 +133,16 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
+                    this.$axios.post("/springbootbase/user/userManager/updateFreeze?userId=" + userId).then((res) => {
+                        if (res.status == 200) {
+                            //隐藏按钮
+                            this.$message.success('冻结成功！');
+                        } else {
+                            this.$message.success(res.msg);
+                        }
                     });
                 }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
+
                 });
             },
             delAll(){

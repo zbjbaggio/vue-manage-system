@@ -39,8 +39,12 @@
                                 title: '用户管理'
                             },
                             {
-                                index: 'vuetable',
-                                title: 'Vue表格组件'
+                                index: 'userOnline',
+                                title: '在线用户'
+                            },
+                            {
+                                index: 'userStopLoad',
+                                title: '暂停登录用户'
                             }
                         ]
                     },
