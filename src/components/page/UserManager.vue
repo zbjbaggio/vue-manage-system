@@ -9,14 +9,17 @@
         <div class="handle-box">
             <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
-                <el-option key="0" label="未激活" value=0></el-option>
-                <el-option key="1" label="正常" value=1></el-option>
-                <el-option key="2" label="冻结" value=2></el-option>
+                <el-option key="0" :label="item.text" :value="item.value" v-for="item in user_status"></el-option>
+                <!--                <el-option key="0" label="未激活" value=0></el-option>
+                                <el-option key="1" label="正常" value=1></el-option>
+                                <el-option key="2" label="冻结" value=2></el-option>-->
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
+            <el-button type="primary" @click="reset">重置</el-button>
         </div>
-        <el-table :data="table" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+        <el-table :data="table" border style="width: 100%" ref="multipleTable"
+                  @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="create_time" label="创建日期" sortable width="170">
             </el-table-column>
@@ -64,11 +67,9 @@
                 multipleSelection: [],
                 select_status: '',
                 select_word: '',
-                del_list: [],
                 is_search: false,
                 user_status: [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '冻结', value: 2}],
-                count: 0,
-                pageSize: 10
+                count: 0
             }
         },
         created(){
@@ -85,28 +86,40 @@
                 this.cur_page = val;
                 this.getData();
             },
+            //重置
+            reset(){
+                this.select_status = '';
+                this.select_word = '';
+                this.getData();
+            },
+            //查询
             getData(){
                 let self = this;
-                self.$axios.get("/springbootbase/user/userManager/list", {params: {page: self.cur_page,status:self.select_status}}).then((res) => {
+                self.$axios.get("/springbootbase/user/userManager/list", {
+                    params: {
+                        limit: self.pageSize,
+                        offset: (self.cur_page - 1) * self.pageSize,
+                        status: self.select_status
+                    }
+                }).then((res) => {
                     if (res.status == 200) {
                         if (!!res.data.list) {
-                            for (var i = 0; i < res.data.list.length; i++) {
-                                if (res.data.list[i].status == 1) {
-                                    res.data.list[i].statusStr = "正常";
-                                }
-                            }
+                            res.data.list.forEach(function (data) {
+                                self.user_status.forEach(function (item) {
+                                    if (data.status == item.value) {
+                                        data.statusStr = item.text;
+                                    }
+                                });
+                            });
                         }
                         self.tableData = res.data.list;
-                        console.log(self.tableData);
                         self.count = res.data.count;
                     } else {
                         this.$message.fail("查询失败！")
                     }
                 })
             },
-            search(){
-                this.is_search = true;
-            },
+            //编辑
             handleEdit(userId) {
                 this.$router.push({name: 'userDetail', query: {userId: userId}});
             },
@@ -116,10 +129,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    });
+                    var idList = [];
+                    idList[0] = userId;
+                    this.deleteUsers(idList);
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -127,6 +139,7 @@
                     });
                 });
             },
+            //冻结
             handleFreeze(userId) {
                 this.$confirm('此操作将冻结该用户, 是否继续?', '提示', {
                     confirmButtonText: '确定',
@@ -138,26 +151,44 @@
                             //隐藏按钮
                             this.$message.success('冻结成功！');
                         } else {
-                            this.$message.success(res.msg);
+                            this.$message.fail(res.msg);
                         }
                     });
-                }).catch(() => {
-
-                });
+                })
             },
+            //批量删除
             delAll(){
                 const self = this,
                     length = self.multipleSelection.length;
-                let str = '';
-                self.del_list = self.del_list.concat(self.multipleSelection);
-                for (let i = 0; i < length; i++) {
-                    str += self.multipleSelection[i].name + ' ';
+                if (length > 0) {
+                    var idList = [];
+                    for (let i = 0; i < length; i++) {
+                        idList[i] = self.multipleSelection[i].id;
+                    }
+                    this.$confirm('此操作将删除选中的用户, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        this.deleteUsers(idList);
+                    });
+                } else {
+                    self.$message.warning("请选择用户！")
                 }
-                self.$message.error('删除了' + str);
-                self.multipleSelection = [];
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+            },
+            deleteUsers(idList){
+                this.$axios.post("/springbootbase/user/userManager/delete?userIds=" + idList).then((res) => {
+                    console.log(res);
+                    if (res.status == 200) {
+                        this.$message.success('删除成功！');
+                        this.getData();
+                    } else {
+                        this.$message.error(res.msg);
+                    }
+                });
             }
         }
     }

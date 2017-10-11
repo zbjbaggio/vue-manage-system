@@ -29,15 +29,12 @@
                     password: ''
                 },
                 rules: {
-                    username: [
-                        {required: true, message: '请输入用户名', trigger: 'blur'},
-                        {min:5, max: 30, message: '长度在 5 到 30 个字符', trigger: 'blur' }
-                    ],
+                    username: this.RULE_USERNAME,
                     password: [
                         {required: true, message: '请输入密码', trigger: 'blur'}
                     ]
                 }
-            }
+            };
         },
         methods: {
             submitForm(formName) {
