@@ -1,3 +1,4 @@
-export function aaa() {
+export function errorfun() {
+    console.log("---------------")
     return true
 }

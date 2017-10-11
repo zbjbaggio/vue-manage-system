@@ -49,8 +49,12 @@
         </el-table>
         <div class="pagination">
             <el-pagination
+                :current-page="cur_page"
+                :page-sizes="pageSizes"
+                :page-size="cur_pageSize"
+                @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                layout="prev, pager, next"
+                layout="total, prev, pager, next, sizes"
                 :total=count>
             </el-pagination>
         </div>
@@ -64,13 +68,14 @@
                 url: './static/vuetable.json',
                 tableData: [],
                 cur_page: 1,
+                cur_pageSize: this.pageSizes[1],
                 multipleSelection: [],
                 select_status: '',
                 select_word: '',
                 is_search: false,
                 user_status: [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '冻结', value: 2}],
                 count: 0
-            }
+            };
         },
         created(){
             this.getData();
@@ -86,10 +91,15 @@
                 this.cur_page = val;
                 this.getData();
             },
+            handleSizeChange(val){
+                this.cur_pageSize = val;
+                this.getData();
+            },
             //重置
             reset(){
                 this.select_status = '';
                 this.select_word = '';
+                this.cur_page = 1;
                 this.getData();
             },
             //查询
@@ -97,9 +107,10 @@
                 let self = this;
                 self.$axios.get("/springbootbase/user/userManager/list", {
                     params: {
-                        limit: self.pageSize,
-                        offset: (self.cur_page - 1) * self.pageSize,
-                        status: self.select_status
+                        limit: self.cur_pageSize,
+                        offset: (self.cur_page - 1) * self.cur_pageSize,
+                        status: self.select_status,
+                        searchStr: self.select_word
                     }
                 }).then((res) => {
                     if (res.status == 200) {
@@ -115,9 +126,9 @@
                         self.tableData = res.data.list;
                         self.count = res.data.count;
                     } else {
-                        this.$message.fail("查询失败！")
+                        this.$message.error("查询失败！");
                     }
-                })
+                }, this.errorfun);
             },
             //编辑
             handleEdit(userId) {
@@ -151,7 +162,7 @@
                             //隐藏按钮
                             this.$message.success('冻结成功！');
                         } else {
-                            this.$message.fail(res.msg);
+                            this.$message.error(res.msg);
                         }
                     });
                 })

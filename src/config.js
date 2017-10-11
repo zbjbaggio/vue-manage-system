@@ -10,6 +10,6 @@ p.RULE_USERNAME = [
     {min: 5, max: 30, message: '长度在 5 到 30 个字符', trigger: 'blur'}
 ];
 //页数
-p.pageSize = 10;
+p.pageSizes = [5,10,15,20];
 
 export default Vue

@@ -1,5 +1,6 @@
 import Vue from './config';
 import App from './App';
+import {errorfun} from './utls/';
 import router from './router';
 import axios from 'axios';
 import ElementUI from 'element-ui';
@@ -22,9 +23,11 @@ axios.interceptors.request.use(function (config) {
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
     //登录校验不正确跳到登录界面
-    if (response.data.status === 50005) {
-        console.log(router);
-        router.app.$router.push('/login')
+    switch (response.data.status) {
+        case 50005:
+            router.app.$message.error("重新登录！");
+            router.app.$router.push('/login');
+            return Promise.reject(response);
     }
     return response.data;
 }, function (error) {

@@ -29,8 +29,13 @@
         },
         methods:{
             handleCommand(command) {
+                const self = this;
                 if(command == 'loginout'){
-                    localStorage.removeItem('ms_username')
+                    self.$axios.post("/springbootbase/loginOut").then(function (response) {
+                    }).catch(function (err) {
+                        console.log(err);
+                        self.message = "连接服务器失败！"
+                    });
                     this.$router.push('/login');
                 }
             }
