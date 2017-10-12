@@ -6,20 +6,17 @@
                 <el-breadcrumb-item>用户管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div class="handle-box">
+        <div class="handle-box" >
             <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
                 <el-option key="0" :label="item.text" :value="item.value" v-for="item in user_status"></el-option>
-                <!--                <el-option key="0" label="未激活" value=0></el-option>
-                                <el-option key="1" label="正常" value=1></el-option>
-                                <el-option key="2" label="冻结" value=2></el-option>-->
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
             <el-button type="primary" @click="reset">重置</el-button>
         </div>
         <el-table :data="table" border style="width: 100%" ref="multipleTable"
-                  @selection-change="handleSelectionChange">
+                  @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="create_time" label="创建日期" sortable width="170">
             </el-table-column>
@@ -31,7 +28,7 @@
             </el-table-column>
             <el-table-column prop="email" label="邮箱" width="250">
             </el-table-column>
-            <el-table-column prop="statusStr" label="状态">
+            <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
             <el-table-column label="操作" width="200">
                 <template scope="scope">
@@ -71,7 +68,8 @@
                 multipleSelection: [],
                 select_status: '',
                 select_word: '',
-                is_search: false,
+                select_order: '',
+                select_desc: false,
                 user_status: [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '冻结', value: 2}],
                 count: 0
             };
@@ -109,19 +107,12 @@
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
                         status: self.select_status,
-                        searchStr: self.select_word
+                        searchStr: self.select_word,
+                        orderBy: self.select_order,
+                        desc: self.select_desc
                     }
                 }).then((res) => {
                     if (res.status == 200) {
-                        if (!!res.data.list) {
-                            res.data.list.forEach(function (data) {
-                                self.user_status.forEach(function (item) {
-                                    if (data.status == item.value) {
-                                        data.statusStr = item.text;
-                                    }
-                                });
-                            });
-                        }
                         self.tableData = res.data.list;
                         self.count = res.data.count;
                     } else {
@@ -200,6 +191,22 @@
                         this.$message.error(res.msg);
                     }
                 });
+            },
+            formatter(row, column){
+                var str = "";
+                this.user_status.forEach(function (item) {
+                    if (row.status == item.value) {
+                        str = item.text;
+                    }
+                });
+                return str;
+            },
+            orderBy(column){
+                self.select_order = column.prop;
+                if (column.order == "descending") {
+                    self.select_desc = true;
+                }
+                this.getData();
             }
         }
     }

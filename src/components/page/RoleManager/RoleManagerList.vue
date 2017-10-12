@@ -9,29 +9,21 @@
         <div class="handle-box">
             <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
-                <el-option key="0" :label="item.text" :value="item.value" v-for="item in user_status"></el-option>
-                <!--                <el-option key="0" label="未激活" value=0></el-option>
-                                <el-option key="1" label="正常" value=1></el-option>
-                                <el-option key="2" label="冻结" value=2></el-option>-->
+                <el-option key="0" :label="item.text" :value="item.value" v-for="item in role_status"></el-option>
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
             <el-button type="primary" @click="reset">重置</el-button>
+            <el-button type="success" style="float:right" @click="add">新增</el-button>
         </div>
         <el-table :data="table" border style="width: 100%" ref="multipleTable"
                   @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="create_time" label="创建日期" sortable width="170">
+            <el-table-column prop="createTime" label="创建日期" sortable width="170">
             </el-table-column>
-            <el-table-column prop="username" label="用户名" width="200">
+            <el-table-column prop="name" label="角色名称" >
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="200">
-            </el-table-column>
-            <el-table-column prop="phone" label="手机号" width="200">
-            </el-table-column>
-            <el-table-column prop="email" label="邮箱" width="250">
-            </el-table-column>
-            <el-table-column prop="statusStr" label="状态">
+            <el-table-column prop="availableStr" label="状态" width="100">
             </el-table-column>
             <el-table-column label="操作" width="200">
                 <template scope="scope">
@@ -39,7 +31,7 @@
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>
                     <el-button size="small" type="warning" v-if="scope.row.status != 2"
-                               @click="handleFreeze(scope.row)">冻结
+                               @click="handleFreeze(scope.row)">启用
                     </el-button>
                     <el-button size="small" type="danger"
                                @click="handleDelete(scope.row.id)">删除
@@ -69,10 +61,10 @@
                 cur_page: 1,
                 cur_pageSize: this.pageSizes[1],
                 multipleSelection: [],
-                select_status: '',
+                select_status: true,
                 select_word: '',
                 is_search: false,
-                user_status: [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '冻结', value: 2}],
+                role_status: [{text: '未启用', value: false}, {text: '启用', value: true}],
                 count: 0
             };
         },
@@ -86,6 +78,9 @@
             }
         },
         methods: {
+            add() {
+                this.$router.push({name: 'roleDetail'});
+            },
             handleCurrentChange(val){
                 this.cur_page = val;
                 this.getData();
@@ -96,7 +91,7 @@
             },
             //重置
             reset(){
-                this.select_status = '';
+                this.select_status = true;
                 this.select_word = '';
                 this.cur_page = 1;
                 this.getData();
@@ -104,7 +99,7 @@
             //查询
             getData(){
                 let self = this;
-                self.$axios.get("/springbootbase/user/userManager/list", {
+                self.$axios.get("/springbootbase/user/roleManager/list", {
                     params: {
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
@@ -115,9 +110,9 @@
                     if (res.status == 200) {
                         if (!!res.data.list) {
                             res.data.list.forEach(function (data) {
-                                self.user_status.forEach(function (item) {
-                                    if (data.status == item.value) {
-                                        data.statusStr = item.text;
+                                self.role_status.forEach(function (item) {
+                                    if (data.available == item.value) {
+                                        data.availableStr = item.text;
                                     }
                                 });
                             });
@@ -130,8 +125,8 @@
                 }, this.errorfun);
             },
             //编辑
-            handleEdit(userId) {
-                this.$router.push({name: 'userDetail', query: {userId: userId}});
+            handleEdit(roleId) {
+                this.$router.push({name: 'roleDetail', query: {roleId: roleId}});
             },
             handleDelete(userId) {
                 this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {

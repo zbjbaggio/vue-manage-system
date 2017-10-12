@@ -19,11 +19,21 @@ const router = new Router({
                 },
                 {
                     path: '/userManager',
-                    component: resolve => require(['../components/page/UserManager.vue'], resolve)
+                    component: resolve => require(['../components/page/UserManager/UserManagerList.vue'], resolve)
+                },
+                {
+                    path: '/userDetail',
+                    name: 'userDetail',
+                    component: resolve => require(['../components/page/UserManager/UserDetail.vue'], resolve)
                 },
                 {
                     path: '/roleManager',
-                    component: resolve => require(['../components/page/RoleManager.vue'], resolve)
+                    component: resolve => require(['../components/page/RoleManager/RoleManagerList.vue'], resolve)
+                },
+                {
+                    path: '/roleDetail',
+                    name: 'roleDetail',
+                    component: resolve => require(['../components/page/RoleManager/RoleDetail.vue'], resolve)
                 },
                 {
                     path: '/menuManager',
@@ -32,11 +42,6 @@ const router = new Router({
                 {
                     path: '/userOnline',
                     component: resolve => require(['../components/page/UserOnline.vue'], resolve)
-                },
-                {
-                    path: '/userDetail',
-                    name: 'userDetail',
-                    component: resolve => require(['../components/page/UserDetail.vue'], resolve)
                 },
                 {
                     path: '/basetable',
