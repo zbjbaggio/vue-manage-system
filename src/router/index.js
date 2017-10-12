@@ -22,6 +22,14 @@ const router = new Router({
                     component: resolve => require(['../components/page/UserManager.vue'], resolve)
                 },
                 {
+                    path: '/roleManager',
+                    component: resolve => require(['../components/page/RoleManager.vue'], resolve)
+                },
+                {
+                    path: '/menuManager',
+                    component: resolve => require(['../components/page/MenuManager.vue'], resolve)
+                },
+                {
                     path: '/userOnline',
                     component: resolve => require(['../components/page/UserOnline.vue'], resolve)
                 },

@@ -39,6 +39,14 @@
                                 title: '用户管理'
                             },
                             {
+                                index: 'menuManager',
+                                title: '菜单管理'
+                            },
+                            {
+                                index: 'roleManager',
+                                title: '角色管理'
+                            },
+                            {
                                 index: 'userOnline',
                                 title: '在线用户'
                             },
