@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-setting"></i> 系统管理</el-breadcrumb-item>
-                <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+                <el-breadcrumb-item>在线用户</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="handle-box">
@@ -39,7 +39,7 @@
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>
                     <el-button size="small" type="warning" v-if="scope.row.status != 2"
-                               @click="handleFreeze(scope.row)">冻结
+                               @click="handleFreeze(scope.row.id)">冻结
                     </el-button>
                     <el-button size="small" type="danger"
                                @click="handleDelete(scope.row.id)">删除
@@ -150,16 +150,15 @@
                 });
             },
             //冻结
-            handleFreeze(row) {
+            handleFreeze(userId) {
                 this.$confirm('此操作将冻结该用户, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$axios.post("/springbootbase/user/userManager/updateFreeze?userId=" + row.id).then((res) => {
+                    this.$axios.post("/springbootbase/user/userManager/updateFreeze?userId=" + userId).then((res) => {
                         if (res.status == 200) {
                             //隐藏按钮
-                            row.status = 2;
                             this.$message.success('冻结成功！');
                         } else {
                             this.$message.error(res.msg);

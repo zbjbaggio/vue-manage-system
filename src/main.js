@@ -9,7 +9,9 @@ import 'element-ui/lib/theme-default/index.css';    // 默认主题
 import "babel-polyfill";
 
 Vue.use(ElementUI);
-
+if (window.location.hostname = '127.0.0.1') {
+    axios.defaults.baseURL = 'http://172.16.1.238:8090';
+}
 axios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     config.headers.token = localStorage.getItem('token');

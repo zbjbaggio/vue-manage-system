@@ -3,7 +3,7 @@ import Router from 'vue-router';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
     routes: [
         {
             path: '/',
@@ -14,12 +14,16 @@ export default new Router({
             component: resolve => require(['../components/common/Home.vue'], resolve),
             children:[
                 {
+                    path: '',
+                    component: resolve => require(['../components/page/Readme.vue'], resolve)
+                },
+                {
                     path: '/userManager',
                     component: resolve => require(['../components/page/UserManager.vue'], resolve)
                 },
                 {
-                    path: '',
-                    component: resolve => require(['../components/page/Readme.vue'], resolve)
+                    path: '/userOnline',
+                    component: resolve => require(['../components/page/UserOnline.vue'], resolve)
                 },
                 {
                     path: '/userDetail',
@@ -65,4 +69,11 @@ export default new Router({
             component: resolve => require(['../components/page/Login.vue'], resolve)
         },
     ]
-})
+});
+
+router.beforeEach((to, from, next) => {
+    // ...
+    next();
+});
+
+export default router
