@@ -13,16 +13,17 @@
                     <el-input v-model="form.name" @change="message = null" placeholder="角色名称"></el-input>
                 </el-form-item>
                 <el-form-item label="详情" prop="description">
-                    <el-input type="textarea" v-model="form.description" rows=10></el-input>
+                    <el-input type="textarea" v-model="form.description" :rows="10"></el-input>
                 </el-form-item>
                 <el-form-item label="是否启用" prop="available">
                     <el-radio-group v-model="form.available">
-                        <el-radio style="margin-left :10px" :label="item.value" v-for="item in role_status">{{item.text}}
+                        <el-radio style="margin-left :10px" :label="item.value" v-for="item in role_status">
+                            {{item.text}}
                         </el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit('form')">提交</el-button>
+                    <el-button type="primary" @click="onSubmit('form')" :loading="loading">提交</el-button>
                     <el-button @click="onReturn">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -35,8 +36,8 @@
     export default {
         created(){
             this.loading2 = true;
-            if (!!this.$route.query.roleId) {
-                this.$axios.get("/springbootbase/user/userManager/detail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
+            if (this.$route.query.roleId) {
+                this.$axios.get("/springbootbase/user/roleManager/detail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
                     this.loading2 = false;
                     this.form.id = res.data.id;
                     this.form.name = res.data.name;
@@ -71,7 +72,8 @@
                     available: true
                 },
                 role_status: [{text: '未启用', value: false}, {text: '启用', value: true}],
-                loading2: false
+                loading2: false,
+                loading: false
             }
         },
         methods: {
@@ -79,12 +81,15 @@
                 const self = this;
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
+                        self.loading = true;
                         this.$axios.post("/springbootbase/user/roleManager/save", this.form).then((res) => {
                             if (res.status == 200) {
                                 this.$message.success('提交成功！');
+                                this.form.id = res.data;
                             } else {
-                                this.$message.success(res.msg);
+                                this.$message.error(res.msg);
                             }
+                            self.loading = false;
                         });
                     } else {
                         return false;

@@ -96,6 +96,8 @@
             reset(){
                 this.select_status = '';
                 this.select_word = '';
+                this.select_order = '';
+                this.select_desc = false;
                 this.cur_page = 1;
                 this.getData();
             },

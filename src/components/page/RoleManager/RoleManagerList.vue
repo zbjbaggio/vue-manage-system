@@ -16,21 +16,20 @@
             <el-button type="primary" @click="reset">重置</el-button>
             <el-button type="success" style="float:right" @click="add">新增</el-button>
         </div>
-        <el-table :data="table" border style="width: 100%" ref="multipleTable"
-                  @selection-change="handleSelectionChange">
+        <el-table :data="table" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="createTime" label="创建日期" sortable width="170">
             </el-table-column>
-            <el-table-column prop="name" label="角色名称" >
+            <el-table-column prop="name" label="角色名称">
             </el-table-column>
-            <el-table-column prop="availableStr" label="状态" width="100">
+            <el-table-column prop="availableStr" label="状态" width="100" :formatter="formatter">
             </el-table-column>
             <el-table-column label="操作" width="200">
                 <template scope="scope">
                     <el-button size="small"
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>
-                    <el-button size="small" type="warning" v-if="scope.row.status != 2"
+                    <el-button size="small" type="warning" v-if="!scope.row.available"
                                @click="handleFreeze(scope.row)">启用
                     </el-button>
                     <el-button size="small" type="danger"
@@ -63,9 +62,11 @@
                 multipleSelection: [],
                 select_status: true,
                 select_word: '',
-                is_search: false,
+                select_order: '',
+                select_desc: false,
                 role_status: [{text: '未启用', value: false}, {text: '启用', value: true}],
-                count: 0
+                count: 0,
+                xxx:{}
             };
         },
         created(){
@@ -94,6 +95,10 @@
                 this.select_status = true;
                 this.select_word = '';
                 this.cur_page = 1;
+                this.select_order = '';
+                this.select_desc = false;
+                console.log(this.xxx);
+                this.xxx.order = null;
                 this.getData();
             },
             //查询
@@ -104,19 +109,12 @@
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
                         status: self.select_status,
-                        searchStr: self.select_word
+                        searchStr: self.select_word,
+                        orderBy: self.select_order,
+                        desc: self.select_desc
                     }
                 }).then((res) => {
                     if (res.status == 200) {
-                        if (!!res.data.list) {
-                            res.data.list.forEach(function (data) {
-                                self.role_status.forEach(function (item) {
-                                    if (data.available == item.value) {
-                                        data.availableStr = item.text;
-                                    }
-                                });
-                            });
-                        }
                         self.tableData = res.data.list;
                         self.count = res.data.count;
                     } else {
@@ -195,6 +193,24 @@
                         this.$message.error(res.msg);
                     }
                 });
+            },
+            formatter(row, column){
+                var str = "";
+                this.role_status.forEach(function (item) {
+                    if (row.available == item.value) {
+                        str = item.text;
+                    }
+                });
+                return str;
+            },
+            orderBy(column){
+                self.select_order = column.prop;
+                this.xxx = column;
+                console.log(this.xxx);
+                if (column.order == "descending") {
+                    self.select_desc = true;
+                }
+                this.getData();
             }
         }
     }
