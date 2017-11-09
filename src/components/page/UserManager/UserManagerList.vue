@@ -13,7 +13,7 @@
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
-            <el-button type="primary" @click="reset">重置</el-button>
+            <el-button type="primary" @click="reset" :disabled=true>重置</el-button>
         </div>
         <el-table :data="table" border style="width: 100%" ref="multipleTable"
                   @selection-change="handleSelectionChange" @sort-change="orderBy">
