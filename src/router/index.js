@@ -74,6 +74,10 @@ const router = new Router({
                 {
                     path: '/drag',
                     component: resolve => require(['../components/page/DragList.vue'], resolve)    // 拖拽列表组件
+                },
+                {
+                    path: '/updatePassword',
+                    component: resolve => require(['../components/page/UpdatePassword.vue'], resolve)    // 拖拽列表组件
                 }
             ]
         },

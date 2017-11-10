@@ -13,7 +13,8 @@
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
-            <el-button type="primary" @click="reset" :disabled=true>重置</el-button>
+            <el-button type="primary" @click="reset">重置</el-button>
+            <el-button type="success" @click="add">新增</el-button>
         </div>
         <el-table :data="table" border style="width: 100%" ref="multipleTable"
                   @selection-change="handleSelectionChange" @sort-change="orderBy">
@@ -101,6 +102,10 @@
                 this.cur_page = 1;
                 this.getData();
             },
+            //新增
+            add(){
+                this.$router.push({name: 'userDetail', query: {type: "add"}});
+            },
             //查询
             getData(){
                 let self = this;
@@ -124,7 +129,7 @@
             },
             //编辑
             handleEdit(userId) {
-                this.$router.push({name: 'userDetail', query: {userId: userId}});
+                this.$router.push({name: 'userDetail', query: {userId: userId,type: "modify"}});
             },
             handleDelete(userId) {
                 this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {

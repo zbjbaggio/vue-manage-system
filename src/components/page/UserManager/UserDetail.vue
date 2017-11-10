@@ -12,6 +12,12 @@
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="form.username" @change="message = null" placeholder="用户名"></el-input>
                 </el-form-item>
+                <el-form-item v-if="type=='add'" label="密码" prop="password">
+                    <el-input type="password" v-model="form.password" @change="message = null" placeholder="密码"></el-input>
+                </el-form-item>
+                <el-form-item v-if="type=='add'" label="确认密码" prop="password2">
+                    <el-input type="password" v-model="form.password2" @change="message = null" placeholder="确认密码"></el-input>
+                </el-form-item>
                 <el-form-item label="姓名" prop="name">
                     <el-input v-model="form.name" @change="message = null" placeholder="姓名"></el-input>
                 </el-form-item>
@@ -21,7 +27,7 @@
                 <el-form-item label="邮箱" prop="email">
                     <el-input v-model="form.email" @change="message = null" placeholder="邮箱"></el-input>
                 </el-form-item>
-                <el-form-item label="创建时间">
+                <el-form-item v-if="type=='modify'" label="创建时间">
                     <el-input v-model="form.create_time" :disabled=true></el-input>
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
@@ -43,23 +49,28 @@
     //import {aaa} from '../../utls/index'
     export default {
         created(){
-            this.loading2 = true;
-            this.$axios.get("/springbootbase/user/userManager/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
-                this.loading2 = false;
-                this.form.id = res.data.id;
-                this.form.username = res.data.username;
-                this.form.name = res.data.name;
-                this.form.phone = res.data.phone;
-                this.form.email = res.data.email;
-                this.form.create_time = res.data.create_time;
-                this.form.status = res.data.status;
-            });
+            this.type = this.$route.query.type;
+            if (this.type == "modify") {
+                this.loading2 = true;
+                this.$axios.get("/springbootbase/user/userManager/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
+                    this.loading2 = false;
+                    this.form.id = res.data.id;
+                    this.form.username = res.data.username;
+                    this.form.name = res.data.name;
+                    this.form.phone = res.data.phone;
+                    this.form.email = res.data.email;
+                    this.form.create_time = res.data.create_time;
+                    this.form.status = res.data.status;
+                });
+            }
         },
         data: function () {
             return {
-                test: true,
+                type:"",
                 rules: {
                     username: this.RULE_USERNAME,
+                    password: this.RULE_PASSWORD,
+                    password2: this.RULE_PASSWORD,
                     name: [
                         {required: true, message: '请输入姓名', trigger: 'blur'},
                         {min: 2, max: 30, message: '长度在 2 到 30 个字符', trigger: 'blur'}
@@ -91,16 +102,28 @@
         },
         methods: {
             onSubmit(formName) {
+                this.loading2 = true;
                 const self = this;
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post("/springbootbase/user/userManager/update", this.form).then((res) => {
-                            if (res.status == 200) {
-                                this.$message.success('提交成功！');
-                            } else {
-                                this.$message.success(res.msg);
-                            }
-                        });
+                        if (this.type =="modify") {
+                            this.$axios.post("/springbootbase/user/userManager/update", this.form).then((res) => {
+                                if (res.status == 200) {
+                                    this.$message.success('提交成功！');
+                                } else {
+                                    this.$message.success(res.msg);
+                                }
+                            });
+                        } else if (this.type =="add"){
+                            this.$axios.post("/springbootbase/user/userManager/add", this.form).then((res) => {
+                                if (res.status == 200) {
+                                    this.$message.success('提交成功！');
+                                } else {
+                                    this.$message.success(res.msg);
+                                }
+                            });
+                        }
+                        this.loading2 = false;
                     } else {
                         return false;
                     }
