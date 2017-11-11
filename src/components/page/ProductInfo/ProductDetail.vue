@@ -120,6 +120,8 @@
                             this.$axios.post("/springbootbase/user/productInfo/add", this.form).then((res) => {
                                 if (res.status == 200) {
                                     this.$message.success('提交成功！');
+                                    this.type = "modify";
+                                    this.form.id = res.data.id;
                                 } else {
                                     this.$message.success(res.msg);
                                 }
