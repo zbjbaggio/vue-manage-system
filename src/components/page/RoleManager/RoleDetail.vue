@@ -7,7 +7,7 @@
                 <el-breadcrumb-item>角色详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div class="form-box" v-loading="loading2" element-loading-text="拼命加载中">
+        <div class="form-box" v-loading="loading" element-loading-text="拼命加载中">
             <el-form ref="form" :model="form" label-width="80px" :rules="rules">
                 <el-form-item label="角色名称" prop="name">
                     <el-input v-model="form.name" @change="message = null" placeholder="角色名称"></el-input>
@@ -35,10 +35,10 @@
     //import {aaa} from '../../utls/index'
     export default {
         created(){
-            this.loading2 = true;
+            this.loading = true;
             if (this.$route.query.roleId) {
                 this.$axios.get("/springbootbase/user/roleManager/detail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
-                    this.loading2 = false;
+                    this.loading = false;
                     this.form.id = res.data.id;
                     this.form.name = res.data.name;
                     this.form.available = res.data.available;
@@ -46,7 +46,7 @@
                     this.form.description = res.data.description;
                 });
             } else {
-                this.loading2 = false;
+                this.loading = false;
             }
         },
         data: function () {
@@ -72,7 +72,7 @@
                     available: true
                 },
                 role_status: [{text: '未启用', value: false}, {text: '启用', value: true}],
-                loading2: false,
+                loading: false,
                 loading: false
             }
         },

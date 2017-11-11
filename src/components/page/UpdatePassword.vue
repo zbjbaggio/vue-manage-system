@@ -7,7 +7,7 @@
                 <el-breadcrumb-item>修改密码</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div class="form-box" v-loading="loading2" element-loading-text="拼命加载中">
+        <div class="form-box" v-loading="loading" element-loading-text="拼命加载中">
             <el-form ref="form" :model="form" label-width="100px" :rules="rules">
                 <el-form-item label="旧密码" prop="oldPassword">
                     <el-input type="password" v-model="form.oldPassword" @change="message = null" placeholder="旧密码" ></el-input>

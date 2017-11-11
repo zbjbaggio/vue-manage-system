@@ -7,7 +7,7 @@
                 <el-breadcrumb-item>用户详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div class="form-box" v-loading="loading2" element-loading-text="拼命加载中">
+        <div class="form-box" v-loading="loading" element-loading-text="拼命加载中">
             <el-form ref="form" :model="form" label-width="80px" :rules="rules">
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="form.username" @change="message = null" placeholder="用户名"></el-input>
@@ -51,9 +51,9 @@
         created(){
             this.type = this.$route.query.type;
             if (this.type == "modify") {
-                this.loading2 = true;
+                this.loading = true;
                 this.$axios.get("/springbootbase/user/userManager/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
-                    this.loading2 = false;
+                    this.loading = false;
                     this.form.id = res.data.id;
                     this.form.username = res.data.username;
                     this.form.name = res.data.name;
@@ -97,12 +97,12 @@
                     status: 0
                 },
                 status: [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '冻结', value: 2}],
-                loading2: false
+                loading: false
             }
         },
         methods: {
             onSubmit(formName) {
-                this.loading2 = true;
+                this.loading = true;
                 const self = this;
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
@@ -123,7 +123,7 @@
                                 }
                             });
                         }
-                        this.loading2 = false;
+                        this.loading = false;
                     } else {
                         return false;
                     }

@@ -16,8 +16,7 @@
             <el-button type="primary" @click="reset">重置</el-button>
             <el-button type="success" @click="add">新增</el-button>
         </div>
-        <el-table :data="table" border style="width: 100%" ref="multipleTable"
-                  @selection-change="handleSelectionChange" @sort-change="orderBy">
+        <el-table :data="table" border style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="create_time" label="创建日期" sortable width="170">
             </el-table-column>
@@ -63,6 +62,7 @@
     export default {
         data() {
             return {
+                loading:true,
                 tableData: [],
                 cur_page: 1,
                 cur_pageSize: this.pageSizes[1],
@@ -109,6 +109,7 @@
             //查询
             getData(){
                 let self = this;
+                this.loading = true;
                 self.$axios.get("/springbootbase/user/userManager/list", {
                     params: {
                         limit: self.cur_pageSize,
@@ -125,7 +126,9 @@
                     } else {
                         this.$message.error("查询失败！");
                     }
+                    this.loading = false;
                 }, this.errorfun);
+
             },
             //编辑
             handleEdit(userId) {

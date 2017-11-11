@@ -29,7 +29,7 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/springbootbase':{
-                target:'http://172.16.1.238:8090/',
+                target:'http://localhost:8090/',
                 changeOrigin:true
             }
         },
