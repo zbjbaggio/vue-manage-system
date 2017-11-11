@@ -26,83 +26,25 @@
                 items: [
                     {
                         icon: 'el-icon-setting',
-                        index: 'readme',
-                        title: '自述'
-                    },
-                    {
-                        icon: 'el-icon-setting',
                         index: 'systemManager',
                         title: '系统管理',
                         subs: [
                             {
                                 index: 'userManager',
                                 title: '用户管理'
-                            },
-                            {
-                                index: 'roleManager',
-                                title: '角色管理'
-                            },
-                            {
-                                index: 'menuManager',
-                                title: '菜单管理'
-                            },
-                            {
-                                index: 'userOnline',
-                                title: '在线用户'
-                            },
-                            {
-                                index: 'userStopLoad',
-                                title: '暂停登录用户'
                             }
                         ]
                     },
                     {
-                        icon: 'el-icon-menu',
-                        index: '2',
-                        title: '表格',
+                        icon: 'el-icon-setting',
+                        index: 'productManager',
+                        title: '产品管理',
                         subs: [
                             {
-                                index: 'basetable',
-                                title: '基础表格'
-                            },
-                            {
-                                index: 'vuetable',
-                                title: 'Vue表格组件'
+                                index: 'productInfo',
+                                title: '产品信息'
                             }
                         ]
-                    },
-                    {
-                        icon: 'el-icon-date',
-                        index: '3',
-                        title: '表单',
-                        subs: [
-                            {
-                                index: 'baseform',
-                                title: '基本表单'
-                            },
-                            {
-                                index: 'vueeditor',
-                                title: '编辑器'
-                            },
-                            {
-                                index: 'markdown',
-                                title: 'markdown'
-                            },
-                            {
-                                index: 'upload',
-                                title: '文件上传'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'el-icon-star-on',
-                        index: 'basecharts',
-                        title: '图表'
-                    },
-                    {
-                        icon: 'el-icon-upload2',
-                        index: 'drag',
-                        title: '拖拽'
                     }
                 ]
             }

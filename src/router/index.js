@@ -27,6 +27,15 @@ const router = new Router({
                     component: resolve => require(['../components/page/UserManager/UserDetail.vue'], resolve)
                 },
                 {
+                    path: '/productInfo',
+                        component: resolve => require(['../components/page/ProductInfo/ProductInfoList.vue'], resolve)
+                },
+                {
+                    path: '/productDetail',
+                    name: 'productDetail',
+                    component: resolve => require(['../components/page/ProductInfo/ProductDetail.vue'], resolve)
+                },
+                {
                     path: '/roleManager',
                     component: resolve => require(['../components/page/RoleManager/RoleManagerList.vue'], resolve)
                 },

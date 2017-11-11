@@ -71,7 +71,7 @@
                 select_word: '',
                 select_order: '',
                 select_desc: false,
-                user_status: [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '冻结', value: 2}],
+                user_status: this.USER_STATUS,
                 count: 0
             };
         },
