@@ -1,31 +1,26 @@
 <template>
-    <div>
+        <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-setting"></i> 系统管理</el-breadcrumb-item>
-                <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-                <el-breadcrumb-item>用户详情</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-setting"></i> 产品管理</el-breadcrumb-item>
+                <el-breadcrumb-item>产品信息</el-breadcrumb-item>
+                <el-breadcrumb-item>产品详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="form-box" v-loading="loading" element-loading-text="拼命加载中">
             <el-form ref="form" :model="form" label-width="80px" :rules="rules">
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="form.username" @change="message = null" placeholder="用户名"></el-input>
+                <el-form-item label="产品编号" prop="productNo">
+                    <el-input v-model="form.productNo" @change="message = null" placeholder="产品编号"></el-input>
                 </el-form-item>
-                <el-form-item v-if="type=='add'" label="密码" prop="password">
-                    <el-input type="password" v-model="form.password" @change="message = null" placeholder="密码"></el-input>
+                <el-form-item label="产品名称" prop="name">
+                    <el-input v-model="form.name" @change="message = null" placeholder="产品名称"></el-input>
                 </el-form-item>
-                <el-form-item v-if="type=='add'" label="确认密码" prop="password2">
-                    <el-input type="password" v-model="form.password2" @change="message = null" placeholder="确认密码"></el-input>
+                <el-form-item label="标题" prop="title">
+                    <el-input v-model="form.title" @change="message = null" placeholder="标题"></el-input>
                 </el-form-item>
-                <el-form-item label="姓名" prop="name">
-                    <el-input v-model="form.name" @change="message = null" placeholder="姓名"></el-input>
-                </el-form-item>
-                <el-form-item label="手机号" prop="phone">
-                    <el-input v-model="form.phone" @change="message = null" placeholder="手机号"></el-input>
-                </el-form-item>
-                <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="form.email" @change="message = null" placeholder="邮箱"></el-input>
+                <el-form-item label="价格" prop="price">
+                    <div class="sub-title">价格格式为2.00</div>
+                    <el-input v-model="form.price" @change="message = null" placeholder="请输入价格"></el-input>
                 </el-form-item>
                 <el-form-item v-if="type=='modify'" label="创建时间">
                     <el-input v-model="form.create_time" :disabled=true></el-input>
@@ -35,6 +30,9 @@
                         <el-radio style="margin-left :10px" :label="item.value" v-for="item in status">{{item.text}}
                         </el-radio>
                     </el-radio-group>
+                </el-form-item>
+                <el-form-item label="描述" prop="description">
+                    <el-input type="textarea" v-model="form.description" @change="message = null" placeholder="描述" :rows="10"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit('form')">提交</el-button>
@@ -52,13 +50,14 @@
             this.type = this.$route.query.type;
             if (this.type == "modify") {
                 this.loading = true;
-                this.$axios.get("/springbootbase/manager/user/userManager/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
+                this.$axios.get("/springbootbase/manager/user/orderInfo/detail", {params: {productId: this.$route.query.productId}}).then((res) => {
                     this.loading = false;
                     this.form.id = res.data.id;
-                    this.form.username = res.data.username;
+                    this.form.productNo = res.data.product_no;
                     this.form.name = res.data.name;
-                    this.form.phone = res.data.phone;
-                    this.form.email = res.data.email;
+                    this.form.price = res.data.price;
+                    this.form.title = res.data.title;
+                    this.form.description = res.data.description;
                     this.form.create_time = res.data.create_time;
                     this.form.status = res.data.status;
                 });
@@ -68,20 +67,21 @@
             return {
                 type:"",
                 rules: {
-                    username: this.RULE_USERNAME,
-                    password: this.RULE_PASSWORD,
-                    password2: this.RULE_PASSWORD,
+                    productNo: [
+                        {required: true, message: '请输入产品编号', trigger: 'blur'},
+                        {min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur'}
+                    ],
                     name: [
-                        {required: true, message: '请输入姓名', trigger: 'blur'},
-                        {min: 2, max: 30, message: '长度在 2 到 30 个字符', trigger: 'blur'}
+                        {required: true, message: '请输入产品名称', trigger: 'blur'},
+                        {min: 1, max: 30, message: '长度在 1 到 30 个字符', trigger: 'blur'}
                     ],
-                    phone: [
-                        {required: true, message: '请输入手机号', trigger: 'blur'},
-                        {min: 11, max: 11, message: '手机号格式不正确！', trigger: 'blur'}
+                    title: [
+                        {required: true, message: '请输入标题', trigger: 'blur'},
+                        {min: 1, max: 100, message: '长度在 1 到 100 个字符！', trigger: 'blur'}
                     ],
-                    email: [
-                        {required: true, message: '请输入邮箱', trigger: 'blur'},
-                        {pattern: this.REGULAR_EXPRESSION_CONSTANT_EMAIL, message: '邮箱格式不正确！', trigger: 'blur'}
+                    price: [
+                        {required: true, message: '请输入价格', trigger: 'blur'},
+                        {pattern: this.REGULAR_EXPRESSION_CONSTANT_PRICE, message: '价格格式不正确！', trigger: 'blur'}
                     ],
                     status: [
                         {required: true, message: '请选择状态', trigger: 'change', type: 'number'}
@@ -89,14 +89,15 @@
                 },
                 form: {
                     id: '',
-                    username: '',
+                    productNo:'',
                     name: '',
-                    phone: '',
-                    email: '',
+                    title: '',
+                    price: '',
+                    description: '',
                     create_time: '',
-                    status: 0
+                    status: 1
                 },
-                status: this.USER_STATUS,
+                status: this.PRODUCT_STATUS,
                 loading: false
             }
         },
@@ -107,7 +108,7 @@
                     if (valid) {
                         this.loading = true;
                         if (this.type =="modify") {
-                            this.$axios.post("/springbootbase/manager/user/userManager/update", this.form).then((res) => {
+                            this.$axios.post("/springbootbase/manager/user/productInfo/update", this.form).then((res) => {
                                 if (res.status == 200) {
                                     this.$message.success('提交成功！');
                                 } else {
@@ -116,7 +117,7 @@
                                 this.loading = false;
                             });
                         } else if (this.type =="add"){
-                            this.$axios.post("/springbootbase/manager/user/userManager/add", this.form).then((res) => {
+                            this.$axios.post("/springbootbase/manager/user/productInfo/add", this.form).then((res) => {
                                 if (res.status == 200) {
                                     this.$message.success('提交成功！');
                                     this.type = "modify";
@@ -133,7 +134,7 @@
                 });
             },
             onReturn() {
-                this.$router.push("/userManager");
+                this.$router.push("/productInfo");
             }
         }
     }

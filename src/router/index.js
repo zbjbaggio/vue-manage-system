@@ -36,6 +36,15 @@ const router = new Router({
                     component: resolve => require(['../components/page/ProductInfo/ProductDetail.vue'], resolve)
                 },
                 {
+                    path: '/orderInfo',
+                        component: resolve => require(['../components/page/OrderInfo/OrderInfoList.vue'], resolve)
+                },
+                {
+                    path: '/orderDetail',
+                    name: 'orderDetail',
+                    component: resolve => require(['../components/page/OrderInfo/OrderDetail.vue'], resolve)
+                },
+                {
                     path: '/roleManager',
                     component: resolve => require(['../components/page/RoleManager/RoleManagerList.vue'], resolve)
                 },

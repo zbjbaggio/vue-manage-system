@@ -2,41 +2,38 @@
     <div class="table">
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item><i class="el-icon-setting"></i> 系统管理</el-breadcrumb-item>
-                <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+                <el-breadcrumb-item><i class="el-icon-setting"></i>订单管理</el-breadcrumb-item>
+                <el-breadcrumb-item>订单信息</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="handle-box" >
             <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
-                <el-option key="0" :label="item.text" :value="item.value" v-for="item in user_status"></el-option>
+                <el-option key="0" :label="item.text" :value="item.value" v-for="item in product_status"></el-option>
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
             <el-button type="primary" @click="reset">重置</el-button>
-            <el-button type="success" @click="add">新增</el-button>
         </div>
         <el-table :data="table" border style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="create_time" label="创建日期" sortable width="170">
             </el-table-column>
-            <el-table-column prop="username" label="用户名" width="200">
+            <el-table-column prop="product_no" label="订单编号" width="200">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="200">
+            <el-table-column prop="name" label="产品名称" width="200">
             </el-table-column>
-            <el-table-column prop="phone" label="手机号" width="200">
-            </el-table-column>
-            <el-table-column prop="email" label="邮箱" width="250">
+            <el-table-column prop="price" label="订单总价" width="200">
             </el-table-column>
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
             <el-table-column label="操作" width="200">
                 <template scope="scope">
                     <el-button size="small"
-                               @click="handleEdit(scope.row.id)">编辑
+                               @click="handleDetail(scope.row.id)">订单详情
                     </el-button>
                     <el-button size="small" type="warning" v-if="scope.row.status != 2"
-                               @click="handleFreeze(scope.row)">冻结
+                               @click="offShelves(scope.row)">下架
                     </el-button>
                     <el-button size="small" type="danger"
                                @click="handleDelete(scope.row.id)">删除
@@ -71,7 +68,7 @@
                 select_word: '',
                 select_order: '',
                 select_desc: false,
-                user_status: this.USER_STATUS,
+                product_status: this.ORDER_STATUS,
                 count: 0
             };
         },
@@ -97,20 +94,14 @@
             reset(){
                 this.select_status = '';
                 this.select_word = '';
-                this.select_order = '';
-                this.select_desc = false;
                 this.cur_page = 1;
                 this.getData();
-            },
-            //新增
-            add(){
-                this.$router.push({name: 'userDetail', query: {type: "add"}});
             },
             //查询
             getData(){
                 let self = this;
                 this.loading = true;
-                self.$axios.get("/springbootbase/manager/user/userManager/list", {
+                self.$axios.get("/springbootbase/manager/user/orderInfo/list", {
                     params: {
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
@@ -130,18 +121,18 @@
                 }, this.errorfun);
 
             },
-            //编辑
-            handleEdit(userId) {
-                this.$router.push({name: 'userDetail', query: {userId: userId,type: "modify"}});
+            //订单详情
+            handleDetail(productId) {
+                this.$router.push({name: 'orderDetail', query: {productId: productId,type: "modify"}});
             },
-            handleDelete(userId) {
-                this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+            handleDelete(productId) {
+                this.$confirm('此操作将永久删除该订单, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
                     var idList = [];
-                    idList[0] = userId;
+                    idList[0] = productId;
                     this.deleteUsers(idList);
                 }).catch(() => {
                     this.$message({
@@ -149,24 +140,6 @@
                         message: '已取消删除'
                     });
                 });
-            },
-            //冻结
-            handleFreeze(row) {
-                this.$confirm('此操作将冻结该用户, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$axios.post("/springbootbase/manager/user/userManager/updateFreeze?userId=" + row.id).then((res) => {
-                        if (res.status == 200) {
-                            //隐藏按钮
-                            row.status = 2;
-                            this.$message.success('冻结成功！');
-                        } else {
-                            this.$message.error(res.msg);
-                        }
-                    });
-                })
             },
             //批量删除
             delAll(){
@@ -177,7 +150,7 @@
                     for (let i = 0; i < length; i++) {
                         idList[i] = self.multipleSelection[i].id;
                     }
-                    this.$confirm('此操作将删除选中的用户, 是否继续?', '提示', {
+                    this.$confirm('此操作将删除选中的订单, 是否继续?', '提示', {
                         confirmButtonText: '确定',
                         cancelButtonText: '取消',
                         type: 'warning'
@@ -185,26 +158,27 @@
                         this.deleteUsers(idList);
                     });
                 } else {
-                    self.$message.warning("请选择用户！")
+                    self.$message.warning("请选择订单！")
                 }
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
             deleteUsers(idList){
-                this.$axios.post("/springbootbase/manager/user/userManager/delete?userIds=" + idList).then((res) => {
-                    console.log(res);
+                this.loading = true;
+                this.$axios.post("/springbootbase/manager/user/ordertInfo/delete?orderIds=" + idList).then((res) => {
                     if (res.status == 200) {
                         this.$message.success('删除成功！');
                         this.getData();
                     } else {
                         this.$message.error(res.msg);
                     }
+                    this.loading = false;
                 });
             },
             formatter(row, column){
                 var str = "";
-                this.user_status.forEach(function (item) {
+                this.product_status.forEach(function (item) {
                     if (row.status == item.value) {
                         str = item.text;
                     }

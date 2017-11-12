@@ -25,6 +25,28 @@
             return {
                 items: [
                     {
+                        icon: 'el-icon-menu',
+                        index: 'productManager',
+                        title: '产品管理',
+                        subs: [
+                            {
+                                index: 'productInfo',
+                                title: '产品信息'
+                            }
+                        ]
+                    },
+                    {
+                        icon: 'el-icon-document',
+                        index: 'OrderManager',
+                        title: '订单管理',
+                        subs: [
+                            {
+                                index: 'orderInfo',
+                                title: '订单信息'
+                            }
+                        ]
+                    },
+                    {
                         icon: 'el-icon-setting',
                         index: 'systemManager',
                         title: '系统管理',
@@ -32,17 +54,6 @@
                             {
                                 index: 'userManager',
                                 title: '用户管理'
-                            }
-                        ]
-                    },
-                    {
-                        icon: 'el-icon-setting',
-                        index: 'productManager',
-                        title: '产品管理',
-                        subs: [
-                            {
-                                index: 'productInfo',
-                                title: '产品信息'
                             }
                         ]
                     }

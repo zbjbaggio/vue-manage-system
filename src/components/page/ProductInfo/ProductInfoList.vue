@@ -108,7 +108,7 @@
             getData(){
                 let self = this;
                 this.loading = true;
-                self.$axios.get("/springbootbase/user/productInfo/list", {
+                self.$axios.get("/springbootbase/manager/user/productInfo/list", {
                     params: {
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
@@ -155,7 +155,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$axios.post("/springbootbase/user/productInfo/offShelves?productId=" + row.id).then((res) => {
+                    this.$axios.post("/springbootbase/manager/user/productInfo/offShelves?productId=" + row.id).then((res) => {
                         if (res.status == 200) {
                             //隐藏按钮
                             row.status = 2;
@@ -191,7 +191,7 @@
             },
             deleteUsers(idList){
                 this.loading = true;
-                this.$axios.post("/springbootbase/user/productInfo/delete?productIds=" + idList).then((res) => {
+                this.$axios.post("/springbootbase/manager/user/productInfo/delete?productIds=" + idList).then((res) => {
                     if (res.status == 200) {
                         this.$message.success('删除成功！');
                         this.getData();
