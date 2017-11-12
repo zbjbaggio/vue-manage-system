@@ -15,22 +15,38 @@
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
             <el-button type="primary" @click="reset">重置</el-button>
         </div>
-        <el-table :data="table" border style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
+        <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="create_time" label="创建日期" sortable width="170">
+            <el-table-column fixed prop="order_no" label="订单编号" width="100">
             </el-table-column>
-            <el-table-column prop="product_no" label="订单编号" width="200">
+            <el-table-column prop="create_time" label="下单日期" sortable width="170">
             </el-table-column>
-            <el-table-column prop="name" label="产品名称" width="200">
+            <el-table-column prop="amount" label="订单总价" width="100">
             </el-table-column>
-            <el-table-column prop="price" label="订单总价" width="200">
+            <el-table-column label="收件人信息">
+            <el-table-column prop="email" label="email" width="200">
+            </el-table-column>
+            <el-table-column prop="receiver_name" label="姓名" width="100">
+            </el-table-column>
+            <el-table-column prop="receiver_address" label="地址" width="200">
+            </el-table-column>
+            <el-table-column prop="receiver_city" label="城市" width="100">
+            </el-table-column>
+            <el-table-column prop="receiver_country" label="国家" width="100">
+            </el-table-column>
+            <el-table-column prop="postage" label="邮编" width="100">
+            </el-table-column>
+            <el-table-column prop="description" label="备注" width="200">
+            </el-table-column>
+            </el-table-column>
+            <el-table-column prop="remark" label="备注" width="200">
             </el-table-column>
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
-            <el-table-column label="操作" width="200">
+            <el-table-column fixed="right" label="操作" width="200" >
                 <template scope="scope">
                     <el-button size="small"
-                               @click="handleDetail(scope.row.id)">订单详情
+                               @click="handleDetail(scope.row.id)">详情
                     </el-button>
                     <el-button size="small" type="warning" v-if="scope.row.status != 2"
                                @click="offShelves(scope.row)">下架

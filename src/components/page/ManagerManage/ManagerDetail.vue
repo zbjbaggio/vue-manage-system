@@ -3,8 +3,8 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-setting"></i> 系统管理</el-breadcrumb-item>
-                <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-                <el-breadcrumb-item>用户详情</el-breadcrumb-item>
+                <el-breadcrumb-item>管理员信息</el-breadcrumb-item>
+                <el-breadcrumb-item>管理员详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="form-box" v-loading="loading" element-loading-text="拼命加载中">

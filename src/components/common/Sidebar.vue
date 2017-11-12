@@ -53,7 +53,7 @@
                         subs: [
                             {
                                 index: 'managerManage',
-                                title: '用户管理'
+                                title: '管理员信息'
                             }
                         ]
                     }
