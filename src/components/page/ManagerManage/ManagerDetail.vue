@@ -52,7 +52,7 @@
             this.type = this.$route.query.type;
             if (this.type == "modify") {
                 this.loading = true;
-                this.$axios.get("/springbootbase/manager/user/userManager/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
+                this.$axios.get("/springbootbase/manage/user/managerInfo/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
                     this.loading = false;
                     this.form.id = res.data.id;
                     this.form.username = res.data.username;
@@ -107,7 +107,7 @@
                     if (valid) {
                         this.loading = true;
                         if (this.type =="modify") {
-                            this.$axios.post("/springbootbase/manager/user/userManager/update", this.form).then((res) => {
+                            this.$axios.post("/springbootbase/manage/user/managerInfo/update", this.form).then((res) => {
                                 if (res.status == 200) {
                                     this.$message.success('提交成功！');
                                 } else {
@@ -116,7 +116,7 @@
                                 this.loading = false;
                             });
                         } else if (this.type =="add"){
-                            this.$axios.post("/springbootbase/manager/user/userManager/add", this.form).then((res) => {
+                            this.$axios.post("/springbootbase/manage/user/managerInfo/add", this.form).then((res) => {
                                 if (res.status == 200) {
                                     this.$message.success('提交成功！');
                                     this.type = "modify";
@@ -133,7 +133,7 @@
                 });
             },
             onReturn() {
-                this.$router.push("/userManager");
+                this.$router.push("/managerManage");
             }
         }
     }

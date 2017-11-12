@@ -50,7 +50,7 @@
             this.type = this.$route.query.type;
             if (this.type == "modify") {
                 this.loading = true;
-                this.$axios.get("/springbootbase/manager/user/productInfo/detail", {params: {productId: this.$route.query.productId}}).then((res) => {
+                this.$axios.get("/springbootbase/manage/user/productInfo/detail", {params: {productId: this.$route.query.productId}}).then((res) => {
                     this.loading = false;
                     this.form.id = res.data.id;
                     this.form.productNo = res.data.product_no;
@@ -108,7 +108,7 @@
                     if (valid) {
                         this.loading = true;
                         if (this.type =="modify") {
-                            this.$axios.post("/springbootbase/manager/user/productInfo/update", this.form).then((res) => {
+                            this.$axios.post("/springbootbase/manage/user/productInfo/update", this.form).then((res) => {
                                 if (res.status == 200) {
                                     this.$message.success('提交成功！');
                                 } else {
@@ -117,7 +117,7 @@
                                 this.loading = false;
                             });
                         } else if (this.type =="add"){
-                            this.$axios.post("/springbootbase/manager/user/productInfo/add", this.form).then((res) => {
+                            this.$axios.post("/springbootbase/manage/user/productInfo/add", this.form).then((res) => {
                                 if (res.status == 200) {
                                     this.$message.success('提交成功！');
                                     this.type = "modify";

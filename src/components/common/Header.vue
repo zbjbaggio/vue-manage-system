@@ -27,7 +27,7 @@
             handleCommand(command) {
                 const self = this;
                 if (command == 'loginout') {
-                    self.$axios.post("/springbootbase/manager/user/loginOut").then(function (response) {
+                    self.$axios.post("/springbootbase/manage/user/loginOut").then(function (response) {
                     }).catch(function (err) {
                         console.log(err);
                         self.message = "连接服务器失败！"

@@ -101,7 +101,7 @@
             getData(){
                 let self = this;
                 this.loading = true;
-                self.$axios.get("/springbootbase/manager/user/orderInfo/list", {
+                self.$axios.get("/springbootbase/manage/user/orderInfo/list", {
                     params: {
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
@@ -166,7 +166,7 @@
             },
             deleteUsers(idList){
                 this.loading = true;
-                this.$axios.post("/springbootbase/manager/user/ordertInfo/delete?orderIds=" + idList).then((res) => {
+                this.$axios.post("/springbootbase/manage/user/orderInfo/delete?orderIds=" + idList).then((res) => {
                     if (res.status == 200) {
                         this.$message.success('删除成功！');
                         this.getData();

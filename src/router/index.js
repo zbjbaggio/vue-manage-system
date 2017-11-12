@@ -18,13 +18,13 @@ const router = new Router({
                     component: resolve => require(['../components/page/Readme.vue'], resolve)
                 },
                 {
-                    path: '/userManager',
-                    component: resolve => require(['../components/page/UserManager/UserManagerList.vue'], resolve)
+                    path: '/managerManage',
+                    component: resolve => require(['../components/page/ManagerManage/ManagerList.vue'], resolve)
                 },
                 {
-                    path: '/userDetail',
-                    name: 'userDetail',
-                    component: resolve => require(['../components/page/UserManager/UserDetail.vue'], resolve)
+                    path: '/managerDetail',
+                    name: 'managerDetail',
+                    component: resolve => require(['../components/page/ManagerManage/ManagerDetail.vue'], resolve)
                 },
                 {
                     path: '/productInfo',

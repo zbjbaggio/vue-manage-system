@@ -26,7 +26,7 @@
                 items: [
                     {
                         icon: 'el-icon-menu',
-                        index: 'productManager',
+                        index: 'productManage',
                         title: '产品管理',
                         subs: [
                             {
@@ -37,7 +37,7 @@
                     },
                     {
                         icon: 'el-icon-document',
-                        index: 'OrderManager',
+                        index: 'OrderManage',
                         title: '订单管理',
                         subs: [
                             {
@@ -48,11 +48,11 @@
                     },
                     {
                         icon: 'el-icon-setting',
-                        index: 'systemManager',
+                        index: 'systemManage',
                         title: '系统管理',
                         subs: [
                             {
-                                index: 'userManager',
+                                index: 'managerManage',
                                 title: '用户管理'
                             }
                         ]

@@ -104,13 +104,13 @@
             },
             //新增
             add(){
-                this.$router.push({name: 'userDetail', query: {type: "add"}});
+                this.$router.push({name: 'managerDetail', query: {type: "add"}});
             },
             //查询
             getData(){
                 let self = this;
                 this.loading = true;
-                self.$axios.get("/springbootbase/manager/user/userManager/list", {
+                self.$axios.get("/springbootbase/manage/user/managerInfo/list", {
                     params: {
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
@@ -132,7 +132,7 @@
             },
             //编辑
             handleEdit(userId) {
-                this.$router.push({name: 'userDetail', query: {userId: userId,type: "modify"}});
+                this.$router.push({name: 'managerDetail', query: {userId: userId,type: "modify"}});
             },
             handleDelete(userId) {
                 this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
@@ -157,7 +157,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$axios.post("/springbootbase/manager/user/userManager/updateFreeze?userId=" + row.id).then((res) => {
+                    this.$axios.post("/springbootbase/manage/user/managerInfo/updateFreeze?userId=" + row.id).then((res) => {
                         if (res.status == 200) {
                             //隐藏按钮
                             row.status = 2;
@@ -192,7 +192,7 @@
                 this.multipleSelection = val;
             },
             deleteUsers(idList){
-                this.$axios.post("/springbootbase/manager/user/userManager/delete?userIds=" + idList).then((res) => {
+                this.$axios.post("/springbootbase/manage/user/managerInfo/delete?userIds=" + idList).then((res) => {
                     console.log(res);
                     if (res.status == 200) {
                         this.$message.success('删除成功！');
