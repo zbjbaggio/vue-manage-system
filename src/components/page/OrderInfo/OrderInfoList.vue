@@ -15,9 +15,30 @@
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
             <el-button type="primary" @click="reset">重置</el-button>
         </div>
-        <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
+        <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy" @expand="expand">
+            <el-table-column type="expand">
+                <template scope="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                        <el-form-item label="商品名称" style="margin-left :100px">
+                            <span>{{ props.row.name }}</span>
+                        </el-form-item>
+                        <el-form-item label="商品单价">
+                            <span>{{ props.row.price }}</span>
+                        </el-form-item>
+                        <el-form-item label="商品数量">
+                            <span>{{ props.row.number }}</span>
+                        </el-form-item>
+                        <el-form-item label="商品总额">
+                            <span>{{ props.row.amount }}</span>
+                        </el-form-item>
+                        <el-form-item label="商品大小">
+                            <span>{{ props.row.szie }}</span>
+                        </el-form-item>
+                    </el-form>
+                </template>
+            </el-table-column>
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column fixed prop="order_no" label="订单编号" width="100">
+            <el-table-column prop="order_no" label="订单编号" width="100">
             </el-table-column>
             <el-table-column prop="create_time" label="下单日期" sortable width="170">
             </el-table-column>
@@ -38,8 +59,6 @@
             </el-table-column>
             <el-table-column prop="description" label="备注" width="200">
             </el-table-column>
-            </el-table-column>
-            <el-table-column prop="remark" label="备注" width="200">
             </el-table-column>
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
@@ -75,7 +94,7 @@
     export default {
         data() {
             return {
-                loading:true,
+                loading: true,
                 tableData: [],
                 cur_page: 1,
                 cur_pageSize: this.pageSizes[1],
@@ -98,6 +117,20 @@
             }
         },
         methods: {
+            expand(row, expanded){
+                if (expanded) {
+                    if (row.orderDetail == null) {
+                        this.$axios.post("/springbootbase/manage/user/orderInfo/orderDetail?orderId=" + row.id).then((res) => {
+                            if (res.status == 200) {
+                                row.orderDetail = res.data;
+                            } else {
+                                this.$message.error(res.msg);
+                            }
+                            this.loading = false;
+                        });
+                    }
+                }
+            },
             handleCurrentChange(val){
                 this.cur_page = val;
                 this.getData();
@@ -139,7 +172,7 @@
             },
             //订单详情
             handleDetail(productId) {
-                this.$router.push({name: 'orderDetail', query: {productId: productId,type: "modify"}});
+                this.$router.push({name: 'orderDetail', query: {productId: productId, type: "modify"}});
             },
             handleDelete(productId) {
                 this.$confirm('此操作将永久删除该订单, 是否继续?', '提示', {
@@ -209,7 +242,7 @@
                 this.getData();
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
