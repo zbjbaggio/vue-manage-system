@@ -18,23 +18,13 @@
         <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy" @expand="expand">
             <el-table-column type="expand">
                 <template scope="props">
+                    <div v-for="order in props.row.orderDetail">
                     <el-form label-position="left" inline class="demo-table-expand">
                         <el-form-item label="商品名称" style="margin-left :100px">
-                            <span>{{ props.row.name }}</span>
-                        </el-form-item>
-                        <el-form-item label="商品单价">
-                            <span>{{ props.row.price }}</span>
-                        </el-form-item>
-                        <el-form-item label="商品数量">
-                            <span>{{ props.row.number }}</span>
-                        </el-form-item>
-                        <el-form-item label="商品总额">
-                            <span>{{ props.row.amount }}</span>
-                        </el-form-item>
-                        <el-form-item label="商品大小">
-                            <span>{{ props.row.szie }}</span>
+                            <span>{{ order.id }}</span>
                         </el-form-item>
                     </el-form>
+                    </div >
                 </template>
             </el-table-column>
             <el-table-column type="selection" width="55"></el-table-column>
@@ -123,6 +113,7 @@
                         this.$axios.post("/springbootbase/manage/user/orderInfo/orderDetail?orderId=" + row.id).then((res) => {
                             if (res.status == 200) {
                                 row.orderDetail = res.data;
+                                console.log(row.orderDetail)
                             } else {
                                 this.$message.error(res.msg);
                             }
