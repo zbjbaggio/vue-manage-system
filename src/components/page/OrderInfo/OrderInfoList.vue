@@ -19,11 +19,11 @@
             <el-table-column type="expand">
                 <template scope="props">
                     <div v-for="order in props.row.orderDetail">
-                    <el-form label-position="left" inline class="demo-table-expand">
-                        <el-form-item label="商品名称" style="margin-left :100px">
-                            <span>{{ order.id }}</span>
-                        </el-form-item>
-                    </el-form>
+                        <el-form label-position="left" inline class="demo-table-expand">
+                            <el-form-item label="商品名称" style="margin-left :100px">
+                                <span>{{ order.productName }}</span>
+                            </el-form-item>
+                        </el-form>
                     </div >
                 </template>
             </el-table-column>
@@ -94,7 +94,8 @@
                 select_order: '',
                 select_desc: false,
                 product_status: this.ORDER_STATUS,
-                count: 0
+                count: 0,
+                test:false
             };
         },
         created(){
@@ -113,7 +114,8 @@
                         this.$axios.post("/springbootbase/manage/user/orderInfo/orderDetail?orderId=" + row.id).then((res) => {
                             if (res.status == 200) {
                                 row.orderDetail = res.data;
-                                console.log(row.orderDetail)
+                                console.log(row.orderDetail);
+                            this.test =true;
                             } else {
                                 this.$message.error(res.msg);
                             }
