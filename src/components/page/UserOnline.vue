@@ -104,7 +104,7 @@
             //查询
             getData(){
                 let self = this;
-                self.$axios.get("/springbootbase/user/userManager/list", {
+                self.$axios.get("/junjie/user/userManager/list", {
                     params: {
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
@@ -156,7 +156,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$axios.post("/springbootbase/user/userManager/updateFreeze?userId=" + userId).then((res) => {
+                    this.$axios.post("/junjie/user/userManager/updateFreeze?userId=" + userId).then((res) => {
                         if (res.status == 200) {
                             //隐藏按钮
                             this.$message.success('冻结成功！');
@@ -190,7 +190,7 @@
                 this.multipleSelection = val;
             },
             deleteUsers(idList){
-                this.$axios.post("/springbootbase/user/userManager/delete?userIds=" + idList).then((res) => {
+                this.$axios.post("/junjie/user/userManager/delete?userIds=" + idList).then((res) => {
                     console.log(res);
                     if (res.status == 200) {
                         this.$message.success('删除成功！');

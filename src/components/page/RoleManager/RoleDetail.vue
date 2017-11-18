@@ -37,7 +37,7 @@
         created(){
             this.loading = true;
             if (this.$route.query.roleId) {
-                this.$axios.get("/springbootbase/user/roleManager/detail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
+                this.$axios.get("/junjie/user/roleManager/detail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
                     this.loading = false;
                     this.form.id = res.data.id;
                     this.form.name = res.data.name;
@@ -82,7 +82,7 @@
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
                         self.loading = true;
-                        this.$axios.post("/springbootbase/user/roleManager/save", this.form).then((res) => {
+                        this.$axios.post("/junjie/user/roleManager/save", this.form).then((res) => {
                             if (res.status == 200) {
                                 this.$message.success('提交成功！');
                                 this.form.id = res.data;

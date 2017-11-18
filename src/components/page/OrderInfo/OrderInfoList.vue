@@ -18,10 +18,22 @@
         <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy" @expand="expand">
             <el-table-column type="expand">
                 <template scope="props">
-                    <div v-for="order in props.row.orderDetail">
+                    <div v-for="orderDetailVO in props.row.orderDetailVOList">
                         <el-form label-position="left" inline class="demo-table-expand">
-                            <el-form-item label="商品名称" style="margin-left :100px">
-                                <span>{{ order.productName }}</span>
+                            <el-form-item label="商品名称" style="margin-left :80px">
+                                <span>{{ orderDetailVO.product_name }}</span>
+                            </el-form-item>
+                            <el-form-item label="商品价格" style="margin-left :100px">
+                                <span>{{ orderDetailVO.price }}</span>
+                            </el-form-item>
+                            <el-form-item label="size" style="margin-left :100px">
+                                <span>{{ orderDetailVO.size }}</span>
+                            </el-form-item>
+                            <el-form-item label="数量" style="margin-left :100px">
+                                <span>{{ orderDetailVO.number }}</span>
+                            </el-form-item>
+                            <el-form-item label="总额" style="margin-left :100px">
+                                <span>{{ orderDetailVO.amount }}</span>
                             </el-form-item>
                         </el-form>
                     </div >
@@ -30,7 +42,7 @@
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="order_no" label="订单编号" width="100">
             </el-table-column>
-            <el-table-column prop="create_time" label="下单日期" sortable width="170">
+            <el-table-column prop="create_time" label="下单日期" sortable width="115">
             </el-table-column>
             <el-table-column prop="amount" label="订单总价" width="100">
             </el-table-column>
@@ -54,11 +66,8 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="200" >
                 <template scope="scope">
-                    <el-button size="small"
-                               @click="handleDetail(scope.row.id)">详情
-                    </el-button>
-                    <el-button size="small" type="warning" v-if="scope.row.status != 2"
-                               @click="offShelves(scope.row)">下架
+                    <el-button size="small" type="warning" v-if="scope.row.status == 3"
+                               @click="success(scope.row.id)">完成
                     </el-button>
                     <el-button size="small" type="danger"
                                @click="handleDelete(scope.row.id)">删除
@@ -108,22 +117,6 @@
             }
         },
         methods: {
-            expand(row, expanded){
-                if (expanded) {
-                    if (row.orderDetail == null) {
-                        this.$axios.post("/springbootbase/manage/user/orderInfo/orderDetail?orderId=" + row.id).then((res) => {
-                            if (res.status == 200) {
-                                row.orderDetail = res.data;
-                                console.log(row.orderDetail);
-                            this.test =true;
-                            } else {
-                                this.$message.error(res.msg);
-                            }
-                            this.loading = false;
-                        });
-                    }
-                }
-            },
             handleCurrentChange(val){
                 this.cur_page = val;
                 this.getData();
@@ -143,7 +136,7 @@
             getData(){
                 let self = this;
                 this.loading = true;
-                self.$axios.get("/springbootbase/manage/user/orderInfo/list", {
+                self.$axios.get("/junjie/manage/user/orderInfo/list", {
                     params: {
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
@@ -162,6 +155,18 @@
                     this.loading = false;
                 }, this.errorfun);
 
+            },
+            success(productId) {
+                this.loading = true;
+                this.$axios.post("/junjie/manage/user/orderInfo/success?orderId=" + productId).then((res) => {
+                    if (res.status == 200) {
+                        this.$message.success('订单完成！');
+                        this.getData();
+                    } else {
+                        this.$message.error(res.msg);
+                    }
+                    this.loading = false;
+                });
             },
             //订单详情
             handleDetail(productId) {
@@ -208,7 +213,7 @@
             },
             deleteUsers(idList){
                 this.loading = true;
-                this.$axios.post("/springbootbase/manage/user/orderInfo/delete?orderIds=" + idList).then((res) => {
+                this.$axios.post("/junjie/manage/user/orderInfo/delete?orderIds=" + idList).then((res) => {
                     if (res.status == 200) {
                         this.$message.success('删除成功！');
                         this.getData();

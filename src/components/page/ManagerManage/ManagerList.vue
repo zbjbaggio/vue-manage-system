@@ -110,7 +110,7 @@
             getData(){
                 let self = this;
                 this.loading = true;
-                self.$axios.get("/springbootbase/manage/user/managerInfo/list", {
+                self.$axios.get("/junjie/manage/user/managerInfo/list", {
                     params: {
                         limit: self.cur_pageSize,
                         offset: (self.cur_page - 1) * self.cur_pageSize,
@@ -157,7 +157,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$axios.post("/springbootbase/manage/user/managerInfo/updateFreeze?userId=" + row.id).then((res) => {
+                    this.$axios.post("/junjie/manage/user/managerInfo/updateFreeze?userId=" + row.id).then((res) => {
                         if (res.status == 200) {
                             //隐藏按钮
                             row.status = 2;
@@ -192,7 +192,7 @@
                 this.multipleSelection = val;
             },
             deleteUsers(idList){
-                this.$axios.post("/springbootbase/manage/user/managerInfo/delete?userIds=" + idList).then((res) => {
+                this.$axios.post("/junjie/manage/user/managerInfo/delete?userIds=" + idList).then((res) => {
                     console.log(res);
                     if (res.status == 200) {
                         this.$message.success('删除成功！');

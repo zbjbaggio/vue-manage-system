@@ -42,7 +42,7 @@
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
                         //登录
-                        self.$axios.post("/springbootbase/manage/login", {
+                        self.$axios.post("/junjie/manage/login", {
                             username: self.ruleForm.username,
                             password: self.ruleForm.password
                         }).then(function (response) {

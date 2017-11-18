@@ -28,7 +28,7 @@ module.exports = {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
-            '/springbootbase':{
+            '/junjie':{
                 target:'http://localhost:8090/',
                 changeOrigin:true
             }
