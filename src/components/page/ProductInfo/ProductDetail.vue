@@ -73,7 +73,7 @@
                     ],
                     name: [
                         {required: true, message: '请输入产品名称', trigger: 'blur'},
-                        {min: 1, max: 30, message: '长度在 1 到 30 个字符', trigger: 'blur'}
+                        {min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur'}
                     ],
                     title: [
                         {required: true, message: '请输入标题', trigger: 'blur'},

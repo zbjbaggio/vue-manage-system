@@ -20,11 +20,9 @@
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="create_time" label="创建日期" sortable width="170">
             </el-table-column>
-            <el-table-column prop="product_no" label="产品编号" width="200">
+            <el-table-column prop="product_no" label="产品编号" width="150">
             </el-table-column>
-            <el-table-column prop="name" label="产品名称" width="200">
-            </el-table-column>
-            <el-table-column prop="title" label="标题" width="200">
+            <el-table-column prop="name" label="产品名称" width="450">
             </el-table-column>
             <el-table-column prop="price" label="价格" width="200">
             </el-table-column>

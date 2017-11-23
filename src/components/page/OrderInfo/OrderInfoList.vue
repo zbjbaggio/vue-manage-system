@@ -51,7 +51,9 @@
             </el-table-column>
             <el-table-column prop="receiver_name" label="姓名" width="100">
             </el-table-column>
-            <el-table-column prop="receiver_address" label="地址" width="200">
+            <el-table-column prop="receiver_address1" label="地址1" width="200">
+            </el-table-column>
+            <el-table-column prop="receiver_address2" label="地址2" width="200">
             </el-table-column>
             <el-table-column prop="receiver_city" label="城市" width="100">
             </el-table-column>
@@ -64,7 +66,7 @@
             </el-table-column>
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
-            <el-table-column fixed="right" label="操作" width="200" >
+            <el-table-column fixed="right" label="操作" width="150" >
                 <template scope="scope">
                     <el-button size="small" type="warning" v-if="scope.row.status == 3"
                                @click="success(scope.row.id)">完成
