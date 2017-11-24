@@ -14,10 +14,6 @@ const router = new Router({
             component: resolve => require(['../components/common/Home.vue'], resolve),
             children:[
                 {
-                    path: '',
-                    component: resolve => require(['../components/page/Readme.vue'], resolve)
-                },
-                {
                     path: '/managerManage',
                     component: resolve => require(['../components/page/ManagerManage/ManagerList.vue'], resolve)
                 },

@@ -50,7 +50,7 @@
                                 localStorage.setItem('ms_username', self.ruleForm.username);
                                 localStorage.setItem('key', response.data.key);
                                 localStorage.setItem('token', response.data.token);
-                                self.$router.push('/readme');
+                                self.$router.push('/orderInfo');
                             } else {
                                 self.message = response.msg;
                             }
