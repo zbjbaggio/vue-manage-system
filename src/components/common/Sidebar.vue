@@ -54,6 +54,10 @@
                             {
                                 index: 'managerManage',
                                 title: '管理员信息'
+                            },
+                            {
+                                index: 'postageInfo',
+                                title: '邮费信息'
                             }
                         ]
                     }

@@ -40,11 +40,15 @@
                 </template>
             </el-table-column>
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="order_no" label="订单编号" width="100">
+            <el-table-column prop="payment_id" label="订单编号" width="100">
             </el-table-column>
             <el-table-column prop="create_time" label="下单日期" sortable width="115">
             </el-table-column>
             <el-table-column prop="amount" label="订单总价" width="100">
+            </el-table-column>
+            <el-table-column prop="productAmount" label="商品金额" width="100">
+            </el-table-column>
+            <el-table-column prop="postage" label="邮费金额" width="100">
             </el-table-column>
             <el-table-column label="收件人信息">
             <el-table-column prop="email" label="email" width="200">
@@ -59,7 +63,7 @@
             </el-table-column>
             <el-table-column prop="receiver_country" label="国家" width="100">
             </el-table-column>
-            <el-table-column prop="postage" label="邮编" width="100">
+            <el-table-column prop="postcode" label="邮编" width="100">
             </el-table-column>
             <el-table-column prop="description" label="备注" width="200">
             </el-table-column>
@@ -68,7 +72,7 @@
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="150" >
                 <template scope="scope">
-                    <el-button size="small" type="warning" v-if="scope.row.status == 3"
+                    <el-button size="small" type="warning" v-if="scope.row.status != 4"
                                @click="success(scope.row.id)">完成
                     </el-button>
                     <el-button size="small" type="danger"
