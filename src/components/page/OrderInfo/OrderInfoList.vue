@@ -53,6 +53,8 @@
             <el-table-column label="收件人信息">
             <el-table-column prop="email" label="email" width="200">
             </el-table-column>
+            <el-table-column prop="phone" label="电话" width="100">
+            </el-table-column>
             <el-table-column prop="receiver_name" label="姓名" width="100">
             </el-table-column>
             <el-table-column prop="receiver_address1" label="地址1" width="200">
