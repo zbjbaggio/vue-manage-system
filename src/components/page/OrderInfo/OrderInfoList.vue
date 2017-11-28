@@ -40,7 +40,7 @@
                 </template>
             </el-table-column>
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="payment_id" label="订单编号" width="100">
+            <el-table-column prop="payment_id" label="订单编号" width="160">
             </el-table-column>
             <el-table-column prop="create_time" label="下单日期" sortable width="115">
             </el-table-column>
@@ -62,6 +62,8 @@
             <el-table-column prop="receiver_city" label="城市" width="100">
             </el-table-column>
             <el-table-column prop="receiver_country" label="国家" width="100">
+            </el-table-column>
+            <el-table-column prop="receiver_area" label="地区" width="100">
             </el-table-column>
             <el-table-column prop="postcode" label="邮编" width="100">
             </el-table-column>
