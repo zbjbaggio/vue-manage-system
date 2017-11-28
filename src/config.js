@@ -21,7 +21,7 @@ p.USER_STATUS =  [{text: '未激活', value: 0}, {text: '正常', value: 1}, {te
 //产品状态
 p.PRODUCT_STATUS =  [ {text: '上架', value: 1}, {text: '下架', value: 2}];
 //订单状态
-p.ORDER_STATUS =  [ {text: '正常订单', value: 1}, {text: '支付中订单', value: 2}, {text: '订单支付完成', value: 3}, {text: '订单处理完成', value: 4}];
+p.ORDER_STATUS =  [ {text: '正常订单', value: 1}, {text: '待支付', value: 2}, {text: '支付完成', value: 3}, {text: '订单完成', value: 4}];
 
 //页数
 p.pageSizes = [5,10,15,20];
