@@ -69,8 +69,6 @@
             </el-table-column>
             <el-table-column prop="postcode" label="邮编" width="100">
             </el-table-column>
-            <el-table-column prop="description" label="备注" width="200">
-            </el-table-column>
             </el-table-column>
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
