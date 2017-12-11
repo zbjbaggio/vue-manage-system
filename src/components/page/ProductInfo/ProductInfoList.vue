@@ -7,14 +7,14 @@
             </el-breadcrumb>
         </div>
         <div class="handle-box" >
-            <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+            <el-button type="primary" size="medium" icon="el-icon-delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
                 <el-option key="0" :label="item.text" :value="item.value" v-for="item in product_status"></el-option>
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-            <el-button type="primary" icon="search" @click="getData">搜索</el-button>
-            <el-button type="primary" @click="reset">重置</el-button>
-            <el-button type="success" @click="add">新增</el-button>
+            <el-button type="primary" size="medium" icon="el-icon-search" @click="getData">搜索</el-button>
+            <el-button type="primary" size="medium" @click="reset">重置</el-button>
+            <el-button type="success" size="medium" @click="add">新增</el-button>
         </div>
         <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="selection" width="55"></el-table-column>
@@ -28,15 +28,15 @@
             </el-table-column>
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
-            <el-table-column label="操作" width="200">
-                <template scope="scope">
-                    <el-button size="small"
+            <el-table-column label="操作" width="220">
+                <template slot-scope="scope">
+                    <el-button size="mini"
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>
-                    <el-button size="small" type="warning" v-if="scope.row.status != 2"
+                    <el-button size="mini" type="warning" v-if="scope.row.status != 2"
                                @click="offShelves(scope.row)">下架
                     </el-button>
-                    <el-button size="small" type="danger"
+                    <el-button size="mini" type="danger"
                                @click="handleDelete(scope.row.id)">删除
                     </el-button>
                 </template>

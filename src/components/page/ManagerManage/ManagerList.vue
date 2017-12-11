@@ -9,7 +9,7 @@
         <div class="handle-box" >
             <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
-                <el-option key="0" :label="item.text" :value="item.value" v-for="item in user_status"></el-option>
+                <el-option key="0" :label="item.text" :value="item.value" v-for="item in user_status" :key="item.value"></el-option>
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
@@ -31,7 +31,7 @@
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
             <el-table-column label="操作" width="200">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-button size="small"
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>

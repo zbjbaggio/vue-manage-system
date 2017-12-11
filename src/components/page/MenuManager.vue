@@ -34,7 +34,7 @@
             <el-table-column prop="statusStr" label="状态">
             </el-table-column>
             <el-table-column label="操作" width="200">
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-button size="small"
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>

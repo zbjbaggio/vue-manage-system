@@ -23,6 +23,9 @@
                 return username ? username : this.name;
             }
         },
+        created() {
+            this.socket()
+        },
         methods: {
             handleCommand(command) {
                 const self = this;
@@ -35,6 +38,13 @@
                     this.$router.push('/login');
                 } else if (command == 'updatePassword') {
                     this.$router.push('/updatePassword');
+                }
+            },
+            socket(){
+                var socket = new WebSocket("ws:localhost:8090/junjie/webSocket");
+                var _this = this;
+                socket.onmessage=function(event){
+                    console.log(111111111111111111111111111111111111111);
                 }
             }
         }

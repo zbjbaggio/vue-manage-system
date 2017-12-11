@@ -26,8 +26,8 @@
                     <el-input v-model="form.create_time" :disabled=true></el-input>
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
-                    <el-radio-group v-model="form.status">
-                        <el-radio style="margin-left :10px" :label="item.value" v-for="item in status">{{item.text}}
+                    <el-radio-group v-model="form.status" >
+                        <el-radio style="margin-left :10px" :label="item.value" v-for="item in status" :key="item.value">{{item.text}}
                         </el-radio>
                     </el-radio-group>
                 </el-form-item>

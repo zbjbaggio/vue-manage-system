@@ -15,9 +15,9 @@
             <el-button type="primary" icon="search" @click="getData">搜索</el-button>
             <el-button type="primary" @click="reset">重置</el-button>
         </div>
-        <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy" @expand="expand">
+        <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="expand">
-                <template scope="props">
+                <template slot-scope="props">
                     <div v-for="orderDetailVO in props.row.orderDetailVOList">
                         <el-form label-position="left" inline class="demo-table-expand">
                             <el-form-item label="商品名称" style="margin-left :80px">
@@ -73,7 +73,7 @@
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
             <el-table-column fixed="right" label="操作" width="150" >
-                <template scope="scope">
+                <template slot-scope="scope">
                     <el-button size="small" type="warning" v-if="scope.row.status != 4"
                                @click="success(scope.row.id)">完成
                     </el-button>

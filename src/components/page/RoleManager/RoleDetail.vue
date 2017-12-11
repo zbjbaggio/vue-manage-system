@@ -17,7 +17,7 @@
                 </el-form-item>
                 <el-form-item label="是否启用" prop="available">
                     <el-radio-group v-model="form.available">
-                        <el-radio style="margin-left :10px" :label="item.value" v-for="item in role_status">
+                        <el-radio style="margin-left :10px" :label="item.value" v-for="item in role_status" :key="item.value">
                             {{item.text}}
                         </el-radio>
                     </el-radio-group>
