@@ -24,13 +24,13 @@
             }
         },
         created() {
-            this.socket()
+            //this.socket()
         },
         methods: {
             handleCommand(command) {
                 const self = this;
                 if (command == 'loginout') {
-                    self.$axios.post("/junjie/manage/user/loginOut").then(function (response) {
+                    self.$axios.post("/junjie/manage/user/me/loginOut").then(function (response) {
                     }).catch(function (err) {
                         console.log(err);
                         self.message = "连接服务器失败！"
@@ -40,13 +40,13 @@
                     this.$router.push('/updatePassword');
                 }
             },
-            socket(){
+          /*  socket(){
                 var socket = new WebSocket("ws:localhost:8090/junjie/webSocket");
                 var _this = this;
                 socket.onmessage=function(event){
                     console.log(111111111111111111111111111111111111111);
                 }
-            }
+            }*/
         }
     }
 </script>

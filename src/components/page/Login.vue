@@ -15,6 +15,9 @@
                 </div>
                 <div class="el-form-item__error" v-if="!!message" style="position: static">{{message}}</div>
             </el-form>
+            <permission type="test" click="aaaa">
+                <div>test</div>
+            </permission>
         </div>
     </div>
 </template>
@@ -22,6 +25,7 @@
 <script>
     export default {
         data: function () {
+            let self = this;
             return {
                 message: '',
                 ruleForm: {
@@ -29,7 +33,7 @@
                     password: ''
                 },
                 rules: {
-                    username: this.RULE_USERNAME,
+                    username: self.RULE_USERNAME,
                     password: [
                         {required: true, message: '请输入密码', trigger: 'blur'}
                     ]
@@ -48,6 +52,8 @@
                         }).then(function (response) {
                             if (response.status == 200) {
                                 localStorage.setItem('ms_username', self.ruleForm.username);
+                                localStorage.setItem('permissionList', JSON.stringify(response.data.permissionList));
+                                localStorage.setItem('buttonList', JSON.stringify(response.data.buttonSet));
                                 localStorage.setItem('key', response.data.key);
                                 localStorage.setItem('token', response.data.token);
                                 self.$router.push('/orderInfo');

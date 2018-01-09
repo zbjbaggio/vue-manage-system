@@ -12,7 +12,7 @@ const router = new Router({
         {
             path: '/readme',
             component: resolve => require(['../components/common/Home.vue'], resolve),
-            children:[
+            children: [
                 {
                     path: '/managerManage',
                     component: resolve => require(['../components/page/ManagerManage/ManagerList.vue'], resolve)
@@ -33,7 +33,7 @@ const router = new Router({
                 },
                 {
                     path: '/productInfo',
-                        component: resolve => require(['../components/page/ProductInfo/ProductInfoList.vue'], resolve)
+                    component: resolve => require(['../components/page/ProductInfo/ProductInfoList.vue'], resolve)
                 },
                 {
                     path: '/productDetail',
@@ -42,7 +42,10 @@ const router = new Router({
                 },
                 {
                     path: '/orderInfo',
-                        component: resolve => require(['../components/page/OrderInfo/OrderInfoList.vue'], resolve)
+                    meta: {
+                        permission: ['out']
+                    },
+                    component: resolve => require(['../components/page/OrderInfo/OrderInfoList.vue'], resolve)
                 },
                 {
                     path: '/orderDetail',
@@ -113,6 +116,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     // ...
+    console.log(to.path)
     next();
 });
 

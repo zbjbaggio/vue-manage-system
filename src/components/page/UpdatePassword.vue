@@ -49,7 +49,7 @@
                 const self = this;
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$axios.post("/junjie/manager/user/userManager/updatePassword", this.form).then((res) => {
+                        this.$axios.post("/junjie/manager/user/me/updatePassword", this.form).then((res) => {
                             if (res.status == 200) {
                                 this.$message.success('提交成功！');
                                 this.form.oldPassword = '';

@@ -1,13 +1,15 @@
 import Vue from './config';
 import App from './App';
-import {errorfun} from './utls/';
+import {errorfun,errorfun2} from './utls/';
 import router from './router';
 import axios from 'axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';   // 默认主题
 import "babel-polyfill";
+import Permission from './components/common/Permission'
 
 Vue.use(ElementUI);
+Vue.component('permission', Permission);
 /*if (window.location.hostname = '127.0.0.1') {
     axios.defaults.baseURL = 'http://172.16.1.238:8090';
 }*/
@@ -36,6 +38,25 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 Vue.prototype.$axios = axios;
+
+const hasPermission = {
+    install (Vue, options){
+        Vue.mixin({
+            methods:{
+                hasPermission(data){
+                    let permissionList = this.$route.meta.permission;
+                    if(permissionList && permissionList.length && permissionList.includes(data)){
+                        return true
+                    }
+                    return false
+                }
+            }
+        })
+    }
+}
+
+export default hasPermission
+
 new Vue({
     router,
     render: h => h(App)
