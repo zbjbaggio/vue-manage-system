@@ -15,9 +15,6 @@
                 </div>
                 <div class="el-form-item__error" v-if="!!message" style="position: static">{{message}}</div>
             </el-form>
-            <permission type="test" click="aaaa">
-                <div>test</div>
-            </permission>
         </div>
     </div>
 </template>

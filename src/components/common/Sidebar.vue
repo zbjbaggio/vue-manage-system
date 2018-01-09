@@ -27,7 +27,7 @@
             onRoutes() {
                 return this.$route.path.replace('/', '');
             },
-            menuList: function () {
+            menuList() {
                 return JSON.parse(localStorage.getItem('permissionList'));
             }
         }

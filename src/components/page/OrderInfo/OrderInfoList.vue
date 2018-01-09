@@ -7,12 +7,12 @@
             </el-breadcrumb>
         </div>
         <div class="handle-box" >
-            <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+            <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
                 <el-option key="0" :label="item.text" :value="item.value" v-for="item in product_status"></el-option>
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-            <el-button type="primary" icon="search" @click="getData" v-if="errorfun2">搜索</el-button>
+            <permission-button name="/manage/user/managerInfo/delet" type="primary" icon="el-icon-search" @click="getData">搜索</permission-button>
             <el-button type="primary" @click="reset">重置</el-button>
         </div>
         <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
@@ -129,6 +129,9 @@
             handleCurrentChange(val){
                 this.cur_page = val;
                 this.getData();
+            },
+            aaaa() {
+              alert(2222);
             },
             handleSizeChange(val){
                 this.cur_pageSize = val;
