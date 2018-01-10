@@ -6,8 +6,7 @@
                 <template v-if="item.child">
                     <el-submenu :index="item.fe_url">
                         <template slot="title"><i :class="item.icon"></i>{{ item.name }}</template>
-                        <el-menu-item v-for="(subItem,i) in item.child" :key="i" :index="subItem.fe_url">{{ subItem.name
-                            }}
+                        <el-menu-item v-for="(subItem,i) in item.child" :key="i" :index="subItem.fe_url">{{subItem.name}}
                         </el-menu-item>
                     </el-submenu>
                 </template>
@@ -28,6 +27,7 @@
                 return this.$route.path.replace('/', '');
             },
             menuList() {
+                console.log(JSON.parse(localStorage.getItem('permissionList')))
                 return JSON.parse(localStorage.getItem('permissionList'));
             }
         }
