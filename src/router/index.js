@@ -23,6 +23,15 @@ const router = new Router({
                     component: resolve => require(['../components/page/ManagerManage/ManagerDetail.vue'], resolve)
                 },
                 {
+                    path: '/menuManage',
+                    component: resolve => require(['../components/page/MenuManage/MenuList.vue'], resolve)
+                },
+                {
+                    path: '/menuManage/menuDetail',
+                    name: 'menuManage/menuDetail',
+                    component: resolve => require(['../components/page/MenuManage/MenuDetail.vue'], resolve)
+                },
+                {
                     path: '/postageInfo',
                     component: resolve => require(['../components/page/PostageInfo/PostageInfoList.vue'], resolve)
                 },
@@ -48,22 +57,18 @@ const router = new Router({
                     component: resolve => require(['../components/page/OrderInfo/OrderInfoList.vue'], resolve)
                 },
                 {
-                    path: '/orderDetail',
-                    name: 'orderDetail',
-                    component: resolve => require(['../components/page/OrderInfo/OrderDetail.vue'], resolve)
+                    path: '/roleManage',
+                    component: resolve => require(['../components/page/RoleManage/RoleList.vue'], resolve)
                 },
                 {
-                    path: '/roleManager',
-                    component: resolve => require(['../components/page/RoleManager/RoleManagerList.vue'], resolve)
+                    path: '/roleManage/permissionDetail',
+                    name: 'roleManage/permissionDetail',
+                    component: resolve => require(['../components/page/RoleManage/PermissionDetail.vue'], resolve)
                 },
                 {
-                    path: '/roleDetail',
-                    name: 'roleDetail',
-                    component: resolve => require(['../components/page/RoleManager/RoleDetail.vue'], resolve)
-                },
-                {
-                    path: '/menuManager',
-                    component: resolve => require(['../components/page/MenuManager.vue'], resolve)
+                    path: '/roleManage/roleDetail',
+                    name: 'roleManage/roleDetail',
+                    component: resolve => require(['../components/page/RoleManage/RoleDetail.vue'], resolve)
                 },
                 {
                     path: '/userOnline',

@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-setting"></i> 系统管理</el-breadcrumb-item>
-                <el-breadcrumb-item to="/roleManager">角色管理</el-breadcrumb-item>
+                <el-breadcrumb-item to="/roleManage">角色管理</el-breadcrumb-item>
                 <el-breadcrumb-item>角色详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -37,7 +37,7 @@
         created(){
             this.loading = true;
             if (this.$route.query.roleId) {
-                this.$axios.get("/junjie/user/roleManager/detail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
+                this.$axios.get("/junjie/manage/user/role/detail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
                     this.loading = false;
                     this.form.id = res.data.id;
                     this.form.name = res.data.name;
@@ -51,7 +51,6 @@
         },
         data: function () {
             return {
-                test: true,
                 rules: {
                     name: [
                         {required: true, message: '请输入角色名称', trigger: 'blur'},
@@ -72,7 +71,6 @@
                     available: true
                 },
                 role_status: [{text: '未启用', value: false}, {text: '启用', value: true}],
-                loading: false,
                 loading: false
             }
         },
@@ -82,10 +80,10 @@
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
                         self.loading = true;
-                        this.$axios.post("/junjie/user/roleManager/save", this.form).then((res) => {
-                            if (res.status == 200) {
+                        this.$axios.post("/junjie/manage/user/role/save", this.form).then((res) => {
+                            if (res.status === 200) {
                                 this.$message.success('提交成功！');
-                                this.form.id = res.data;
+                                this.form.id = res.data.id;
                             } else {
                                 this.$message.error(res.msg);
                             }
@@ -97,7 +95,7 @@
                 });
             },
             onReturn() {
-                this.$router.push("/roleManager");
+                this.$router.push("/roleManage");
             }
         }
     }

@@ -24,7 +24,6 @@
         computed: {
             isPermission () {
                 let buttonList = JSON.parse(localStorage.getItem('buttonList'));
-                console.log(buttonList);
                 return buttonList && buttonList.length > 0 && buttonList.includes(this.name);
             }
         },

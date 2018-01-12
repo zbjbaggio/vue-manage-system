@@ -141,7 +141,7 @@
                 }).then(() => {
                     var idList = [];
                     idList[0] = userId;
-                    this.deleteUsers(idList);
+                    this.deleteMenu(idList);
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -180,7 +180,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        this.deleteUsers(idList);
+                        this.deleteMenu(idList);
                     });
                 } else {
                     self.$message.warning("请选择用户！")
@@ -189,7 +189,7 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-            deleteUsers(idList){
+            deleteMenu(idList){
                 this.$axios.post("/junjie/user/userManager/delete?userIds=" + idList).then((res) => {
                     console.log(res);
                     if (res.status == 200) {

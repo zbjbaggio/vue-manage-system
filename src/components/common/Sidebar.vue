@@ -1,18 +1,17 @@
 <template>
     <div class="sidebar">
         <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" background-color="#324157"
-                 text-color="#bfcbd9" unique-opened router>
+                 text-color="#bfcbd9"  unique-opened router>
             <template v-for="item in menuList">
-                <template v-if="item.child">
+                <template v-if="item.children">
                     <el-submenu :index="item.fe_url">
                         <template slot="title"><i :class="item.icon"></i>{{ item.name }}</template>
-                        <el-menu-item v-for="(subItem,i) in item.child" :key="i" :index="subItem.fe_url">{{subItem.name}}
-                        </el-menu-item>
+                        <el-menu-item v-for="(subItem,i) in item.children" :key="i" :index="subItem.fe_url">{{subItem.name}}</el-menu-item>
                     </el-submenu>
                 </template>
                 <template v-else>
                     <el-menu-item :index="item.fe_url">
-                        <i :class="item.icon"></i>{{ item.name }}
+                        <i :class="item.icon"></i>{{item.name}}
                     </el-menu-item>
                 </template>
             </template>
@@ -24,10 +23,9 @@
     export default {
         computed: {
             onRoutes() {
-                return this.$route.path.replace('/', '');
+                return "/" + this.$route.path.split("/")[1]
             },
             menuList() {
-                console.log(JSON.parse(localStorage.getItem('permissionList')))
                 return JSON.parse(localStorage.getItem('permissionList'));
             }
         }

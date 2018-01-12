@@ -22,8 +22,8 @@ p.USER_STATUS =  [{text: '未激活', value: 0}, {text: '正常', value: 1}, {te
 p.PRODUCT_STATUS =  [ {text: '上架', value: 1}, {text: '下架', value: 2}];
 //订单状态
 p.ORDER_STATUS =  [ {text: '正常订单', value: 1}, {text: '待支付', value: 2}, {text: '支付完成', value: 3}, {text: '订单完成', value: 4}];
-
 //页数
 p.pageSizes = [5,10,15,20];
-
+//是否启用
+p.available = [{text: '未启用', value: false}, {text: '启用', value: true}];
 export default Vue

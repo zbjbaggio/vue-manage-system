@@ -7,12 +7,12 @@
             </el-breadcrumb>
         </div>
         <div class="handle-box" >
-            <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+            <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
                 <el-option key="0" :label="item.text" :value="item.value" v-for="item in user_status" :key="item.value"></el-option>
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-            <el-button type="primary" icon="search" @click="getData">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="getData">搜索</el-button>
             <el-button type="primary" @click="reset">重置</el-button>
             <el-button type="success" @click="add">新增</el-button>
         </div>
@@ -35,7 +35,7 @@
                     <el-button size="small"
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>
-                    <el-button size="small" type="warning" v-if="scope.row.status != 2"
+                    <el-button size="small" type="warning" v-if="scope.row.status !== 2"
                                @click="handleFreeze(scope.row)">冻结
                     </el-button>
                     <el-button size="small" type="danger"
@@ -120,7 +120,7 @@
                         desc: self.select_desc
                     }
                 }).then((res) => {
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         self.tableData = res.data.list;
                         self.count = res.data.count;
                     } else {
@@ -132,7 +132,7 @@
             },
             //编辑
             handleEdit(userId) {
-                this.$router.push({name: 'managerDetail', query: {userId: userId,type: "modify"}});
+                this.$router.push({name: 'managerDetail', query: {userId: userId, type: "modify"}});
             },
             handleDelete(userId) {
                 this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
@@ -140,9 +140,9 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    var idList = [];
+                    let idList = [];
                     idList[0] = userId;
-                    this.deleteUsers(idList);
+                    this.deleteMenu(idList);
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -158,7 +158,7 @@
                     type: 'warning'
                 }).then(() => {
                     this.$axios.post("/junjie/manage/user/managerInfo/updateFreeze?userId=" + row.id).then((res) => {
-                        if (res.status == 200) {
+                        if (res.status === 200) {
                             //隐藏按钮
                             row.status = 2;
                             this.$message.success('冻结成功！');
@@ -173,7 +173,7 @@
                 const self = this,
                     length = self.multipleSelection.length;
                 if (length > 0) {
-                    var idList = [];
+                    let idList = [];
                     for (let i = 0; i < length; i++) {
                         idList[i] = self.multipleSelection[i].id;
                     }
@@ -182,7 +182,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        this.deleteUsers(idList);
+                        this.deleteMenu(idList);
                     });
                 } else {
                     self.$message.warning("请选择用户！")
@@ -191,10 +191,9 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-            deleteUsers(idList){
-                this.$axios.post("/junjie/manage/user/managerInfo/delete?userIds=" + idList).then((res) => {
-                    console.log(res);
-                    if (res.status == 200) {
+            deleteMenu(idList){
+                this.$axios.post("/junjie/manage/user/menu/delete?userIds=" + idList).then((res) => {
+                    if (res.status === 200) {
                         this.$message.success('删除成功！');
                         this.getData();
                     } else {
@@ -203,9 +202,9 @@
                 });
             },
             formatter(row, column){
-                var str = "";
+                let str = "";
                 this.user_status.forEach(function (item) {
-                    if (row.status == item.value) {
+                    if (row.status === item.value) {
                         str = item.text;
                     }
                 });
@@ -213,7 +212,7 @@
             },
             orderBy(column){
                 self.select_order = column.prop;
-                if (column.order == "descending") {
+                if (column.order === "descending") {
                     self.select_desc = true;
                 }
                 this.getData();

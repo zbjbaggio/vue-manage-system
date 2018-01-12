@@ -7,9 +7,9 @@
             </el-breadcrumb>
         </div>
         <div class="handle-box" >
-            <el-button type="primary" icon="delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+            <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-            <el-button type="primary" icon="search" @click="getData">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" @click="getData">搜索</el-button>
             <el-button type="primary" @click="reset">重置</el-button>
             <el-button type="success" @click="add">新增</el-button>
         </div>
@@ -21,7 +21,7 @@
             </el-table-column>
             <el-table-column prop="price" label="价格" width="200">
             </el-table-column>
-            <el-table-column label="操作" width="200">
+            <el-table-column label="操作" width="150">
                 <template slot-scope="scope">
                     <el-button size="small"
                                @click="handleEdit(scope.row.id)">编辑

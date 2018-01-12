@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-setting"></i>系统管理</el-breadcrumb-item>
-                <el-breadcrumb-item>邮费信息</el-breadcrumb-item>
+                <el-breadcrumb-item to="/postageInfo">邮费信息</el-breadcrumb-item>
                 <el-breadcrumb-item>邮费详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>

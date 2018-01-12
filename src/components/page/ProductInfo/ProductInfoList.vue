@@ -138,7 +138,7 @@
                 }).then(() => {
                     var idList = [];
                     idList[0] = productId;
-                    this.deleteUsers(idList);
+                    this.deleteMenu(idList);
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -178,7 +178,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        this.deleteUsers(idList);
+                        this.deleteMenu(idList);
                     });
                 } else {
                     self.$message.warning("请选择产品！")
@@ -187,7 +187,7 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-            deleteUsers(idList){
+            deleteMenu(idList){
                 this.loading = true;
                 this.$axios.post("/junjie/manage/user/productInfo/delete?productIds=" + idList).then((res) => {
                     if (res.status == 200) {

@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-setting"></i> 系统管理</el-breadcrumb-item>
-                <el-breadcrumb-item>管理员信息</el-breadcrumb-item>
+                <el-breadcrumb-item to="managerManage">管理员信息</el-breadcrumb-item>
                 <el-breadcrumb-item>管理员详情</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -12,10 +12,10 @@
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="form.username" @change="message = null" placeholder="用户名"></el-input>
                 </el-form-item>
-                <el-form-item v-if="type=='add'" label="密码" prop="password">
+                <el-form-item v-if="type === 'add'" label="密码" prop="password">
                     <el-input type="password" v-model="form.password" @change="message = null" placeholder="密码"></el-input>
                 </el-form-item>
-                <el-form-item v-if="type=='add'" label="确认密码" prop="password2">
+                <el-form-item v-if="type === 'add'" label="确认密码" prop="password2">
                     <el-input type="password" v-model="form.password2" @change="message = null" placeholder="确认密码"></el-input>
                 </el-form-item>
                 <el-form-item label="姓名" prop="name">
@@ -27,7 +27,7 @@
                 <el-form-item label="邮箱" prop="email">
                     <el-input v-model="form.email" @change="message = null" placeholder="邮箱"></el-input>
                 </el-form-item>
-                <el-form-item v-if="type=='modify'" label="创建时间">
+                <el-form-item v-if="type === 'modify'" label="创建时间">
                     <el-input v-model="form.create_time" :disabled=true></el-input>
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
@@ -50,7 +50,7 @@
     export default {
         created(){
             this.type = this.$route.query.type;
-            if (this.type == "modify") {
+            if (this.type === "modify") {
                 this.loading = true;
                 this.$axios.get("/junjie/manage/user/managerInfo/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
                     this.loading = false;
@@ -106,18 +106,18 @@
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
                         this.loading = true;
-                        if (this.type =="modify") {
+                        if (this.type === "modify") {
                             this.$axios.post("/junjie/manage/user/managerInfo/update", this.form).then((res) => {
-                                if (res.status == 200) {
+                                if (res.status === 200) {
                                     this.$message.success('提交成功！');
                                 } else {
                                     this.$message.success(res.msg);
                                 }
                                 this.loading = false;
                             });
-                        } else if (this.type =="add"){
+                        } else if (this.type === "add"){
                             this.$axios.post("/junjie/manage/user/managerInfo/add", this.form).then((res) => {
-                                if (res.status == 200) {
+                                if (res.status === 200) {
                                     this.$message.success('提交成功！');
                                     this.type = "modify";
                                     this.form.id = res.data.id;
