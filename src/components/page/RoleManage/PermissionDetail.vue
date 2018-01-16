@@ -8,8 +8,14 @@
             </el-breadcrumb>
         </div>
         <div class="form-box" v-loading="loading" element-loading-text="拼命加载中">
-            <el-tree :data="data" show-checkbox="" default-expand-all="" node-key="id" ref="tree" highlight-current :props="defaultProps" :default-checked-keys="default1">
-            </el-tree>
+            <div class="handle-box">
+                <el-button type="primary" @click="save" size="mini">保存</el-button>
+                <el-button @click="onReturn" size="mini">取消</el-button>
+            </div>
+            <div >
+                <el-tree style="border: 1px solid #D1D1E8;margin-top: 15px;" :data="data" show-checkbox="" default-expand-all="" node-key="id" ref="tree" highlight-current :props="defaultProps" :default-checked-keys="checked">
+                </el-tree>
+            </div>
         </div>
     </div>
 </template>
@@ -18,10 +24,9 @@
     export default {
         created(){
             if (this.$route.query.roleId) {
-                this.$axios.get("/junjie/manage/user/role/permissionDetail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
+                this.$axios.get("/junjie/manage/user/role/getPermissionDetail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
                     this.data = res.data.treeVOS;
-                    this.default1 = res.data.check;
-                    console.log(this.default1);
+                    this.checked = res.data.check;
                 });
             }
             this.loading = false;
@@ -30,7 +35,7 @@
             return {
                 loading: true,
                 data: [],
-                default1:[],
+                checked:[],
                 defaultProps: {
                     children: 'children',
                     label: 'label'
@@ -38,8 +43,11 @@
             }
         },
         methods: {
-            setTree() {
-
+            save() {
+                console.log(this.$refs.tree.getCurrentNode());
+            },
+            onReturn() {
+                this.$router.push("/roleManage");
             }
         }
     }

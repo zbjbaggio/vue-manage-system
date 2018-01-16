@@ -37,7 +37,7 @@
         created(){
             this.loading = true;
             if (this.$route.query.roleId) {
-                this.$axios.get("/junjie/manage/user/role/detail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
+                this.$axios.get("/junjie/manage/user/role/getDetail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
                     this.loading = false;
                     this.form.id = res.data.id;
                     this.form.name = res.data.name;
