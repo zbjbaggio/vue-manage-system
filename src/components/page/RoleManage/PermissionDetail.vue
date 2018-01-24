@@ -11,9 +11,13 @@
             <div class="handle-box">
                 <el-button type="primary" @click="save" size="mini">保存</el-button>
                 <el-button @click="onReturn" size="mini">取消</el-button>
+                <el-button type="default" @click="allChecked" size="mini">全选</el-button>
+                <el-button @click="resetChecked" size="mini">清空</el-button>
             </div>
-            <div >
-                <el-tree style="border: 1px solid #D1D1E8;margin-top: 15px;" :data="data" show-checkbox="" default-expand-all="" node-key="id" ref="tree" highlight-current :props="defaultProps" :default-checked-keys="checked">
+            <div>
+                <el-tree style="border: 1px solid #D1D1E8;margin-top: 15px;" :data="data" show-checkbox=""
+                         default-expand-all="" node-key="id" ref="tree" highlight-current :props="defaultProps"
+                         :default-checked-keys="checked">
                 </el-tree>
             </div>
         </div>
@@ -22,7 +26,7 @@
 
 <script>
     export default {
-        created(){
+        created() {
             if (this.$route.query.roleId) {
                 this.$axios.get("/junjie/manage/user/role/getPermissionDetail", {params: {roleId: this.$route.query.roleId}}).then((res) => {
                     this.data = res.data.treeVOS;
@@ -35,7 +39,7 @@
             return {
                 loading: true,
                 data: [],
-                checked:[],
+                checked: [],
                 defaultProps: {
                     children: 'children',
                     label: 'label'
@@ -44,22 +48,38 @@
         },
         methods: {
             save() {
-                const nodes = this.$refs.tree.getCheckedNodes();
+                const self = this;
+                self.loading = true;
+                const nodes = self.$refs.tree.getCheckedNodes();
                 let param = {};
-                param.roleId = this.$route.query.roleId;
+                param.roleId = self.$route.query.roleId;
                 let permissionIds = [];
                 for (let i = 0; i < nodes.length; i++) {
                     permissionIds[i] = nodes[i].id;
                 }
                 param.permissionIds = permissionIds;
-                console.log(param);
                 this.$axios.post("/junjie/manage/user/role/savePermission", param).then((res) => {
-                    this.data = res.data.treeVOS;
-                    this.checked = res.data.check;
+                    if (res.status === 200) {
+                        this.$message.success('提交成功！');
+                    } else {
+                        this.$message.error(res.msg);
+                    }
+                    self.loading = false;
                 });
             },
             onReturn() {
                 this.$router.push("/roleManage");
+            },
+            resetChecked() {
+                this.$refs.tree.setCheckedKeys([]);
+            },
+            allChecked() {
+                let ids = [];
+                for (let i = 0; i < this.data.length; i++) {
+                    ids[i] = this.data[i].id;
+                }
+                console.log(ids);
+                this.$refs.tree.setCheckedKeys(ids);
             }
         }
     }
