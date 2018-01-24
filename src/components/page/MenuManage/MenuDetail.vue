@@ -36,7 +36,7 @@
                     <el-button @click="onReturn">取消</el-button>
                 </el-form-item>
             </el-form>
-            <div v-if="type === 'modify'">
+            <div v-if="type === 'modify' && hasButton">
                 <el-button type="text" @click="dialogFormVisible = true">添加按钮</el-button>
                 <el-table :data="table" border style="width: 100%">
                     <el-table-column prop="name" label="按钮名称" width="120">
@@ -92,6 +92,7 @@
                         {max: 40, message: '长度不能超过 40 个字符', trigger: 'blur'}
                     ],
                     feUrl: [
+                        {required: true, message: '请输入前端地址', trigger: 'blur'},
                         {max: 100, message: '长度不能超过 100 个字符', trigger: 'blur'}
                     ],
                     beUrl: [
@@ -121,6 +122,7 @@
                     beUrlButton: '',
                     available: true
                 },
+                hasButton: false,
                 available: this.available,
                 loading: false,
                 dialogFormVisible: false
@@ -141,6 +143,7 @@
                         this.form.feUrl = res.data.fe_url;
                         this.form.beUrl = res.data.be_url;
                         this.table = res.data.button;
+                        this.hasButton = res.data.hasButton;
                     });
                 }
             },
@@ -149,11 +152,7 @@
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
                         self.loading = true;
-                        let url = "/junjie/manage/user/menu/save";
-                        if (this.type === "modify") {
-                            url = "/junjie/manage/user/menu/update";
-                        }
-                        this.$axios.post(url, this.form).then((res) => {
+                        this.$axios.post("/junjie/manage/user/menu/save", this.form).then((res) => {
                             if (res.status === 200) {
                                 this.$message.success('提交成功！');
                                 this.type = "modify";
