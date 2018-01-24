@@ -138,24 +138,6 @@
                     });
                 });
             },
-            //冻结
-            handleFreeze(row) {
-                this.$confirm('此操作将冻结该用户, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.$axios.post("/junjie/user/userManager/updateFreeze?userId=" + row.id).then((res) => {
-                        if (res.status === 200) {
-                            //隐藏按钮
-                            row.status = 2;
-                            this.$message.success('冻结成功！');
-                        } else {
-                            this.$message.error(res.msg);
-                        }
-                    });
-                })
-            },
             //批量删除
             delAll(){
                 const self = this,

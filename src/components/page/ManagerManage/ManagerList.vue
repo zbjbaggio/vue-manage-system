@@ -30,13 +30,13 @@
             </el-table-column>
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
-            <el-table-column label="操作" width="200">
+            <el-table-column label="操作" width="220">
                 <template slot-scope="scope">
                     <el-button size="small"
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>
                     <el-button size="small" type="warning" v-if="scope.row.status !== 2"
-                               @click="handleFreeze(scope.row)">冻结
+                               @click="handleLocked(scope.row)">锁定
                     </el-button>
                     <el-button size="small" type="danger"
                                @click="handleDelete(scope.row.id)">删除
@@ -151,8 +151,8 @@
                 });
             },
             //冻结
-            handleFreeze(row) {
-                this.$confirm('此操作将冻结该用户, 是否继续?', '提示', {
+            handleLocked(row) {
+                this.$confirm('此操作将锁定该用户, 是否继续?', '提示', {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
@@ -161,7 +161,7 @@
                         if (res.status === 200) {
                             //隐藏按钮
                             row.status = 2;
-                            this.$message.success('冻结成功！');
+                            this.$message.success('锁定成功！');
                         } else {
                             this.$message.error(res.msg);
                         }

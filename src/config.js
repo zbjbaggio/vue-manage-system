@@ -17,7 +17,7 @@ p.RULE_PASSWORD = [
 ];
 //状态
 //用户状态
-p.USER_STATUS =  [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '冻结', value: 2}];
+p.USER_STATUS =  [{text: '未激活', value: 0}, {text: '正常', value: 1}, {text: '锁定', value: 2}];
 //产品状态
 p.PRODUCT_STATUS =  [ {text: '上架', value: 1}, {text: '下架', value: 2}];
 //订单状态

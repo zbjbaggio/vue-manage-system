@@ -44,7 +44,19 @@
         },
         methods: {
             save() {
-                console.log(this.$refs.tree.getCurrentNode());
+                const nodes = this.$refs.tree.getCheckedNodes();
+                let param = {};
+                param.roleId = this.$route.query.roleId;
+                let permissionIds = [];
+                for (let i = 0; i < nodes.length; i++) {
+                    permissionIds[i] = nodes[i].id;
+                }
+                param.permissionIds = permissionIds;
+                console.log(param);
+                this.$axios.post("/junjie/manage/user/role/savePermission", param).then((res) => {
+                    this.data = res.data.treeVOS;
+                    this.checked = res.data.check;
+                });
             },
             onReturn() {
                 this.$router.push("/roleManage");
