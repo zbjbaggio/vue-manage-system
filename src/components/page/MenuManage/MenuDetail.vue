@@ -180,11 +180,7 @@
                         self.loading = true;
                         this.buttonForm.parentId = this.form.id;
                         this.buttonForm.beUrl = this.buttonForm.beUrlButton;
-                        let url = "/junjie/manage/user/menu/saveButton";
-                        if (this.buttonForm.id) {
-                            url = "/junjie/manage/user/menu/updateButton";
-                        }
-                        this.$axios.post(url, this.buttonForm).then((res) => {
+                        this.$axios.post("/junjie/manage/user/menu/saveButton", this.buttonForm).then((res) => {
                             if (res.status === 200) {
                                 this.$message.success('提交成功！');
                                 this.fetchData();
