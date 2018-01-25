@@ -105,28 +105,20 @@
                 const self = this;
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.loading = true;
-                        if (this.type === "modify") {
-                            this.$axios.post("/junjie/manage/user/managerInfo/update", this.form).then((res) => {
-                                if (res.status === 200) {
-                                    this.$message.success('提交成功！');
-                                } else {
-                                    this.$message.success(res.msg);
-                                }
-                                this.loading = false;
-                            });
-                        } else if (this.type === "add"){
-                            this.$axios.post("/junjie/manage/user/managerInfo/add", this.form).then((res) => {
-                                if (res.status === 200) {
-                                    this.$message.success('提交成功！');
-                                    this.type = "modify";
-                                    this.form.id = res.data.id;
-                                } else {
-                                    this.$message.success(res.msg);
-                                }
-                                this.loading = false;
-                            });
+                        if (this.form.password !== this.form.password2) {
+                            this.$message.error("密码与确认密码不一致！");
+                            return;
                         }
+                        this.loading = true;
+                        this.$axios.post("/junjie/manage/user/managerInfo/save", this.form).then((res) => {
+                            if (res.status === 200) {
+                                this.$message.success('提交成功！');
+                                this.form.id = res.data.id;
+                            } else {
+                                this.$message.error(res.msg);
+                            }
+                            this.loading = false;
+                        });
                     } else {
                         return false;
                     }

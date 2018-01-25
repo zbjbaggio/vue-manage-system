@@ -142,7 +142,7 @@
                 }).then(() => {
                     let idList = [];
                     idList[0] = userId;
-                    this.deleteMenu(idList);
+                    this.delAll(idList);
                 }).catch(() => {
                     this.$message({
                         type: 'info',

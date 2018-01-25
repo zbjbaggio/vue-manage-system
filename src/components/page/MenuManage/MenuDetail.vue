@@ -37,7 +37,7 @@
                 </el-form-item>
             </el-form>
             <div v-if="type === 'modify' && hasButton">
-                <el-button type="text" @click="dialogFormVisible = true">添加按钮</el-button>
+                <el-button type="text" @click="addButton">添加按钮</el-button>
                 <el-table :data="table" border style="width: 100%">
                     <el-table-column prop="name" label="按钮名称" width="120">
                     </el-table-column>
@@ -70,7 +70,6 @@
 </template>
 
 <script>
-    import utls from '../../../utls'
     export default {
         created() {
             this.fetchData();
@@ -172,6 +171,10 @@
             },
             onReturn() {
                 this.$router.push("/menuManage");
+            },
+            addButton() {
+                this.dialogFormVisible = true;
+                this.buttonForm = {};
             },
             buttonOnSubmit(formName) {
                 const self = this;
