@@ -128,7 +128,6 @@
                     }
                     this.loading = false;
                 }, this.errorfun);
-
             },
             //编辑
             handleEdit(userId) {
@@ -142,7 +141,7 @@
                 }).then(() => {
                     let idList = [];
                     idList[0] = userId;
-                    this.delAll(idList);
+                    this.delete(idList);
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -182,7 +181,7 @@
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        this.deleteMenu(idList);
+                        this.delete(idList);
                     });
                 } else {
                     self.$message.warning("请选择用户！")
@@ -191,8 +190,8 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-            deleteMenu(idList){
-                this.$axios.post("/junjie/manage/user/menu/delete?userIds=" + idList).then((res) => {
+            delete(idList){
+                this.$axios.post("/junjie/manage/user/managerInfo/remove?userIds=" + idList).then((res) => {
                     if (res.status === 200) {
                         this.$message.success('删除成功！');
                         this.getData();
