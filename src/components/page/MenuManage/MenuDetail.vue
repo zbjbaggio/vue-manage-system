@@ -156,6 +156,7 @@
                                 this.$message.success('提交成功！');
                                 this.type = "modify";
                                 this.form.id = res.data.id;
+                                this.hasButton = true;
                             } else {
                                 this.$message.error(res.msg);
                             }

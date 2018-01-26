@@ -18,9 +18,14 @@ const router = new Router({
                     component: resolve => require(['../components/page/ManagerManage/ManagerList.vue'], resolve)
                 },
                 {
-                    path: '/managerDetail',
-                    name: 'managerDetail',
+                    path: '/managerManage/managerDetail',
+                    name: 'managerManage/managerDetail',
                     component: resolve => require(['../components/page/ManagerManage/ManagerDetail.vue'], resolve)
+                },
+                {
+                    path: '/managerManage/chooseRole',
+                    name: 'managerManage/chooseRole',
+                    component: resolve => require(['../components/page/ManagerManage/ChooseRole.vue'], resolve)
                 },
                 {
                     path: '/menuManage',

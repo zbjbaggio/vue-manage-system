@@ -30,7 +30,7 @@
             </el-table-column>
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
-            <el-table-column label="操作" width="220">
+            <el-table-column label="操作" width="290">
                 <template slot-scope="scope">
                     <el-button size="small"
                                @click="handleEdit(scope.row.id)">编辑
@@ -40,6 +40,9 @@
                     </el-button>
                     <el-button size="small" type="danger"
                                @click="handleDelete(scope.row.id)">删除
+                    </el-button>
+                    <el-button size="small" type="primary" v-if="scope.row.status !== 2"
+                               @click="handleRole(scope.row.id)">角色
                     </el-button>
                 </template>
             </el-table-column>
@@ -189,6 +192,10 @@
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+            },
+
+            handleRole(userId) {
+                this.$router.push({name: 'managerManage/chooseRole', query: {userId: userId}});
             },
             delete(idList){
                 this.$axios.post("/junjie/manage/user/managerInfo/remove?userIds=" + idList).then((res) => {
