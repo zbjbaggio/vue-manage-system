@@ -134,15 +134,7 @@
                     this.loading = true;
                     this.$axios.get("/junjie/manage/user/menu/detail", {params: {menuId: this.$route.query.menuId}}).then((res) => {
                         this.loading = false;
-                        this.form.id = res.data.id;
-                        this.form.name = res.data.name;
-                        this.form.icon = res.data.icon;
-                        this.form.available = res.data.available;
-                        this.form.code = res.data.code;
-                        this.form.feUrl = res.data.fe_url;
-                        this.form.beUrl = res.data.be_url;
-                        this.table = res.data.button;
-                        this.hasButton = res.data.hasButton;
+                        this.form = res.data;
                     });
                 }
             },

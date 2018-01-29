@@ -22,9 +22,9 @@
             </el-table-column>
             <el-table-column prop="name" label="菜单名称">
             </el-table-column>
-            <el-table-column prop="fe_url" label="前端地址">
+            <el-table-column prop="feUrl" label="前端地址">
             </el-table-column>
-            <el-table-column prop="be_url" label="后端地址">
+            <el-table-column prop="beUrl" label="后端地址">
             </el-table-column>
             <el-table-column label="操作" width="150">
                 <template slot-scope="scope">

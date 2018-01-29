@@ -18,7 +18,7 @@
         </div>
         <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="create_time" label="创建日期" sortable width="170">
+            <el-table-column prop="createTime" label="创建日期" sortable width="170">
             </el-table-column>
             <el-table-column prop="username" label="用户名" width="200">
             </el-table-column>
@@ -134,7 +134,7 @@
             },
             //编辑
             handleEdit(userId) {
-                this.$router.push({name: 'managerDetail', query: {userId: userId, type: "modify"}});
+                this.$router.push({name: 'managerManage/managerDetail', query: {userId: userId, type: "modify"}});
             },
             handleDelete(userId) {
                 this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
@@ -193,9 +193,9 @@
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
-
+            //角色
             handleRole(userId) {
-                this.$router.push({name: 'managerManage/chooseRole', query: {userId: userId}});
+                this.$router.push({name: 'managerManage/chooseRole', query: {roleId: userId}});
             },
             delete(idList){
                 this.$axios.post("/junjie/manage/user/managerInfo/remove?userIds=" + idList).then((res) => {

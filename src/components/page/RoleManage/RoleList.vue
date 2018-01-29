@@ -24,17 +24,20 @@
             </el-table-column>
             <el-table-column prop="availableStr" label="状态" width="100" :formatter="formatter">
             </el-table-column>
-            <el-table-column label="操作" width="220">
+            <el-table-column label="操作" width="290">
                 <template slot-scope="scope">
                     <el-button size="small"
                                @click="handleEdit(scope.row.id)">编辑
                     </el-button>
-                    <el-button size="small" type="success"
-                               @click="handlePermission(scope.row)">授权
-                    </el-button>
                     <el-button size="small" type="danger"
                                @click="handleDelete(scope.row.id)">删除
                     </el-button>
+                    <el-button size="small" type="success"
+                               @click="handlePermission(scope.row)">授权
+                    </el-button>
+                    <permissionButton size="small" type="primary"
+                               @click="handleUser(scope.row.id)">用户
+                    </permissionButton>
                 </template>
             </el-table-column>
         </el-table>
@@ -161,6 +164,10 @@
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
+            },
+            //用户
+            handleUser(roleId) {
+                this.$router.push({name: 'roleManage/chooseUser', query: {roleId: roleId}});
             },
             //授权
             handlePermission(row) {

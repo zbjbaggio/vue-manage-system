@@ -28,7 +28,7 @@
                     <el-input v-model="form.email" @change="message = null" placeholder="邮箱"></el-input>
                 </el-form-item>
                 <el-form-item v-if="type === 'modify'" label="创建时间">
-                    <el-input v-model="form.create_time" :disabled=true></el-input>
+                    <el-input v-model="form.createTime" :disabled=true></el-input>
                 </el-form-item>
                 <el-form-item label="状态" prop="status">
                     <el-radio-group v-model="form.status">
@@ -54,13 +54,7 @@
                 this.loading = true;
                 this.$axios.get("/junjie/manage/user/managerInfo/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
                     this.loading = false;
-                    this.form.id = res.data.id;
-                    this.form.username = res.data.username;
-                    this.form.name = res.data.name;
-                    this.form.phone = res.data.phone;
-                    this.form.email = res.data.email;
-                    this.form.create_time = res.data.create_time;
-                    this.form.status = res.data.status;
+                    this.form = res.data;
                 });
             }
         },
@@ -93,7 +87,7 @@
                     name: '',
                     phone: '',
                     email: '',
-                    create_time: '',
+                    createTime: '',
                     status: 0
                 },
                 status: this.USER_STATUS,

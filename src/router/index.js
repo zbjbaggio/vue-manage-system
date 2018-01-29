@@ -71,6 +71,11 @@ const router = new Router({
                     component: resolve => require(['../components/page/RoleManage/PermissionDetail.vue'], resolve)
                 },
                 {
+                    path: '/roleManage/chooseUser',
+                    name: 'roleManage/chooseUser',
+                    component: resolve => require(['../components/page/RoleManage/ChooseUser.vue'], resolve)
+                },
+                {
                     path: '/roleManage/roleDetail',
                     name: 'roleManage/roleDetail',
                     component: resolve => require(['../components/page/RoleManage/RoleDetail.vue'], resolve)

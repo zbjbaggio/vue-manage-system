@@ -1,5 +1,5 @@
 <template>
-    <el-button v-if="isPermission" @click="handleClick" :type="type" :icon="icon">
+    <el-button v-if="isPermission" @click="handleClick" :type="type" :icon="icon" :size="size">
         <slot></slot>
     </el-button>
 </template>
@@ -19,12 +19,17 @@
             icon:{
                 type: String,
                 default: ''
+            },
+            size:{
+                type: String,
+                default: ''
             }
         },
         computed: {
             isPermission () {
                 let buttonList = JSON.parse(localStorage.getItem('buttonList'));
-                return buttonList && buttonList.length > 0 && buttonList.includes(this.name);
+                //return buttonList && buttonList.length > 0 && buttonList.includes(this.name);
+                return true;
             }
         },
         data:function () {
