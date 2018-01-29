@@ -12,7 +12,7 @@
             <el-button @click="onReturn" size="mini">取消</el-button>
         </div>
         <div style="margin-top: 15px;">
-            <el-table :data="tableData" border stripe style="width: 356px" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy" width="355">
+            <el-table ref="multipleTable" :data="tableData" border stripe style="width: 356px" v-loading.body="loading" @selection-change="handleSelectionChange" width="355">
                 <el-table-column type="selection" width="55"></el-table-column>
                 <el-table-column prop="name" label="角色名称" width="300">
                 </el-table-column>
@@ -30,8 +30,9 @@
                 multipleSelection: [],
             };
         },
-        created() {
-            this.getData();
+        mounted () {
+            let self = this;
+            self.getData();
         },
         methods: {
             //查询
@@ -45,6 +46,13 @@
                 }).then((res) => {
                     if (res.status === 200) {
                         self.tableData = res.data;
+                        self.$nextTick(function(){
+                            self.tableData.forEach(function (item) {
+                                if (item.managerId) {
+                                    self.$refs.multipleTable.toggleRowSelection(item);
+                                }
+                            });
+                        });
                     } else {
                         this.$message.error("查询失败！");
                     }
@@ -55,7 +63,26 @@
                 this.multipleSelection = val;
             },
             save() {
-
+                const self = this,
+                    length = self.multipleSelection.length;
+                let idList = [];
+                for (let i = 0; i < length; i++) {
+                    idList[i] = self.multipleSelection[i].id;
+                }
+                let params = {};
+                params.managerId = this.$route.query.userId;
+                params.roleIds = idList;
+                this.$axios.post("/junjie/manage/user/managerInfo/saveRoles", params).then((res) => {
+                    if (res.status === 200) {
+                        this.$message.success('保存成功！');
+                        this.getData();
+                    } else {
+                        this.$message.error(res.msg);
+                    }
+                });
+            },
+            onReturn() {
+                this.$router.push("/managerManage");
             }
         }
     }
