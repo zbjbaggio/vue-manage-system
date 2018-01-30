@@ -195,7 +195,7 @@
             },
             //角色
             handleRole(userId) {
-                this.$router.push({name: 'managerManage/chooseRole', query: {roleId: userId}});
+                this.$router.push({name: 'managerManage/chooseRole', query: {userId: userId}});
             },
             delete(idList){
                 this.$axios.post("/junjie/manage/user/managerInfo/remove?userIds=" + idList).then((res) => {

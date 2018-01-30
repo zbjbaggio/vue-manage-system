@@ -4,13 +4,13 @@
                  text-color="#bfcbd9"  unique-opened router>
             <template v-for="item in menuList">
                 <template v-if="item.children">
-                    <el-submenu :index="item.fe_url">
+                    <el-submenu :index="item.feUrl">
                         <template slot="title"><i :class="item.icon"></i>{{ item.name }}</template>
-                        <el-menu-item v-for="(subItem,i) in item.children" :key="i" :index="subItem.fe_url">{{subItem.name}}</el-menu-item>
+                        <el-menu-item v-for="(subItem,i) in item.children" :key="i" :index="subItem.feUrl">{{subItem.name}}</el-menu-item>
                     </el-submenu>
                 </template>
                 <template v-else>
-                    <el-menu-item :index="item.fe_url">
+                    <el-menu-item :index="item.feUrl">
                         <i :class="item.icon"></i>{{item.name}}
                     </el-menu-item>
                 </template>

@@ -15,7 +15,7 @@
         </div>
         <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="create_time" label="创建日期" sortable width="170">
+            <el-table-column prop="createTime" label="创建日期" sortable width="170">
             </el-table-column>
             <el-table-column prop="name" label="邮费名称">
             </el-table-column>
@@ -23,12 +23,8 @@
             </el-table-column>
             <el-table-column label="操作" width="150">
                 <template slot-scope="scope">
-                    <el-button size="small"
-                               @click="handleEdit(scope.row.id)">编辑
-                    </el-button>
-                    <el-button size="small" type="danger"
-                               @click="handleDelete(scope.row.id)">删除
-                    </el-button>
+                    <el-button size="small" @click="handleEdit(scope.row.id)">编辑</el-button>
+                    <el-button size="small" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
