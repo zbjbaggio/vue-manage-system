@@ -36,12 +36,12 @@
                     <el-button @click="onReturn">取消</el-button>
                 </el-form-item>
             </el-form>
-            <div v-if="type === 'modify' && hasButton">
+            <div v-if="type === 'modify' && form.hasButton">
                 <el-button type="text" @click="addButton">添加按钮</el-button>
-                <el-table :data="table" border style="width: 100%">
+                <el-table :data="form.button" border style="width: 100%">
                     <el-table-column prop="name" label="按钮名称" width="120">
                     </el-table-column>
-                    <el-table-column prop="be_url" label="后端地址">
+                    <el-table-column prop="beUrl" label="后端地址">
                     </el-table-column>
                     <el-table-column label="操作" width="150">
                         <template slot-scope="scope">
@@ -121,7 +121,6 @@
                     beUrlButton: '',
                     available: true
                 },
-                hasButton: false,
                 available: this.available,
                 loading: false,
                 dialogFormVisible: false
@@ -203,7 +202,8 @@
                     this.$axios.post("/junjie/manage/user/menu/removeButton?permissionId=" + row.id).then((res) => {
                         if (res.status === 200) {
                             this.$message.success('删除成功！');
-                            this.table.remove(row);
+                            console.log(this.form.button);
+                            this.form.button.remove(row);
                         } else {
                             this.$message.error(res.msg);
                         }
@@ -223,7 +223,7 @@
             handleEdit(row) {
                 this.dialogFormVisible = true;
                 this.buttonForm = row;
-                this.buttonForm.beUrlButton = row.be_url;
+                this.buttonForm.beUrlButton = row.beUrl;
             }
         }
     }
