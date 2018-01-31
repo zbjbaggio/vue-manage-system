@@ -70,6 +70,7 @@
 </template>
 
 <script>
+
     export default {
         created() {
             this.fetchData();
@@ -202,7 +203,6 @@
                     this.$axios.post("/junjie/manage/user/menu/removeButton?permissionId=" + row.id).then((res) => {
                         if (res.status === 200) {
                             this.$message.success('删除成功！');
-                            console.log(this.form.button);
                             this.form.button.remove(row);
                         } else {
                             this.$message.error(res.msg);
