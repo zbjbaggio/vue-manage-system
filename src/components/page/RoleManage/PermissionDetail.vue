@@ -78,7 +78,6 @@
                 for (let i = 0; i < this.data.length; i++) {
                     ids[i] = this.data[i].id;
                 }
-                console.log(ids);
                 this.$refs.tree.setCheckedKeys(ids);
             }
         }
