@@ -52,7 +52,7 @@
             this.type = this.$route.query.type;
             if (this.type === "modify") {
                 this.loading = true;
-                this.$axios.get("/junjie/manage/user/managerInfo/detail", {params: {userId: this.$route.query.userId}}).then((res) => {
+                this.$axios.get("/junjie/manage/user/managerInfo/getDetail", {params: {userId: this.$route.query.userId}}).then((res) => {
                     this.loading = false;
                     this.form = res.data;
                 });

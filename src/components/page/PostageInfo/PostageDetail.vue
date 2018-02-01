@@ -32,7 +32,7 @@
             this.type = this.$route.query.type;
             if (this.type == "modify") {
                 this.loading = true;
-                this.$axios.get("/junjie/manage/user/postageInfo/detail", {params: {postageId: this.$route.query.postageId}}).then((res) => {
+                this.$axios.get("/junjie/manage/user/postageInfo/getDetail", {params: {postageId: this.$route.query.postageId}}).then((res) => {
                     this.loading = false;
                     this.form.id = res.data.id;
                     this.form.name = res.data.name;

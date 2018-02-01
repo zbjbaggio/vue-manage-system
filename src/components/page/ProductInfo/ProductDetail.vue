@@ -50,7 +50,7 @@
             this.type = this.$route.query.type;
             if (this.type == "modify") {
                 this.loading = true;
-                this.$axios.get("/junjie/manage/user/productInfo/detail", {params: {productId: this.$route.query.productId}}).then((res) => {
+                this.$axios.get("/junjie/manage/user/productInfo/getDetail", {params: {productId: this.$route.query.productId}}).then((res) => {
                     this.loading = false;
                     this.form.id = res.data.id;
                     this.form.productNo = res.data.product_no;

@@ -16,7 +16,7 @@
             <el-button type="primary" @click="reset">重置</el-button>
             <el-button type="success" @click="add">新增</el-button>
         </div>
-        <el-table :data="table" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange" @sort-change="orderBy">
+        <el-table :data="table" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange" @sort-change="orderBy" v-loading.body="loading">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="createTime" label="创建日期" sortable width="170">
             </el-table-column>
@@ -69,6 +69,7 @@
                 select_desc: false,
                 role_status: this.available,
                 count: 0,
+                loading: true
             };
         },
         created(){
@@ -104,6 +105,7 @@
             //查询
             getData(){
                 let self = this;
+                this.loading = true;
                 self.$axios.get("/junjie/manage/user/role/list", {
                     params: {
                         limit: self.cur_pageSize,
@@ -120,6 +122,7 @@
                     } else {
                         this.$message.error("查询失败！");
                     }
+                    this.loading = false;
                 }, this.errorfun);
             },
             //编辑

@@ -16,7 +16,7 @@
             <el-button type="primary" @click="reset">重置</el-button>
             <el-button type="success" @click="add">新增</el-button>
         </div>
-        <el-table :data="table" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange" @sort-change="orderBy">
+        <el-table :data="table" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange" @sort-change="orderBy" v-loading.body="loading">
             <el-table-column type="selection" width="55"></el-table-column>
             <el-table-column prop="code" label="菜单编码">
             </el-table-column>
@@ -65,6 +65,7 @@
                 select_desc: false,
                 role_status: this.available,
                 count: 0,
+                loading:false
             };
         },
         created(){
@@ -100,6 +101,7 @@
             //查询
             getData(){
                 let self = this;
+                this.loading = true;
                 self.$axios.get("/junjie/manage/user/menu/list", {
                     params: {
                         limit: self.cur_pageSize,
@@ -116,6 +118,7 @@
                     } else {
                         this.$message.error("查询失败！");
                     }
+                    this.loading = false;
                 }, this.errorfun);
             },
             //编辑
@@ -158,6 +161,7 @@
                     self.$message.warning("请选择用户！")
                 }
             },
+            //选中
             handleSelectionChange(val) {
                 this.multipleSelection = val;
             },
