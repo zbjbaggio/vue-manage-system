@@ -37,7 +37,7 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit('form')">提交</el-button>
+                    <permissionButton type="primary" @click="onSubmit('form')" name="/manage/user/managerInfo/save">提交</permissionButton>
                     <el-button @click="onReturn">取消</el-button>
                 </el-form-item>
             </el-form>

@@ -28,8 +28,7 @@
         computed: {
             isPermission () {
                 let buttonList = JSON.parse(localStorage.getItem('buttonList'));
-                //return buttonList && buttonList.length > 0 && buttonList.includes(this.name);
-                return true;
+                return buttonList && buttonList.length > 0 && buttonList.includes(this.name);
             }
         },
         data:function () {

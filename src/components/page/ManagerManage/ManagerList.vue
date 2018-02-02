@@ -7,14 +7,14 @@
             </el-breadcrumb>
         </div>
         <div class="handle-box" >
-            <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+            <permissionButton type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAll" name="/manage/user/managerInfo/remove">批量删除</permissionButton>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
                 <el-option key="0" :label="item.text" :value="item.value" v-for="item in user_status" :key="item.value"></el-option>
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-            <el-button type="primary" icon="el-icon-search" @click="getData">搜索</el-button>
+            <permissionButton type="primary" icon="el-icon-search" @click="getData" name="/manage/user/managerInfo/list">搜索</permissionButton>
             <el-button type="primary" @click="reset">重置</el-button>
-            <el-button type="success" @click="add">新增</el-button>
+            <permissionButton type="success" @click="add" name="/manage/user/managerInfo/save">新增</permissionButton>
         </div>
         <el-table :data="table" border stripe style="width: 100%" ref="multipleTable" v-loading.body="loading" @selection-change="handleSelectionChange" @sort-change="orderBy">
             <el-table-column type="selection" width="55"></el-table-column>
@@ -32,18 +32,14 @@
             </el-table-column>
             <el-table-column label="操作" width="290">
                 <template slot-scope="scope">
-                    <el-button size="small"
-                               @click="handleEdit(scope.row.id)">编辑
-                    </el-button>
-                    <el-button size="small" type="warning" v-if="scope.row.status !== 2"
-                               @click="handleLocked(scope.row)">锁定
-                    </el-button>
-                    <el-button size="small" type="danger"
-                               @click="handleDelete(scope.row.id)">删除
-                    </el-button>
-                    <el-button size="small" type="primary" v-if="scope.row.status !== 2"
-                               @click="handleRole(scope.row.id)">角色
-                    </el-button>
+                    <permissionButton size="small" name="/manage/user/managerInfo/getDetail" @click="handleEdit(scope.row.id)">编辑
+                    </permissionButton>
+                    <permissionButton name="/manage/user/managerInfo/updateFreeze" size="small" type="warning" v-if="scope.row.status !== 2" @click="handleLocked(scope.row)">锁定
+                    </permissionButton>
+                    <permissionButton name="/manage/user/managerInfo/remove" size="small" type="danger" @click="handleDelete(scope.row.id)">删除
+                    </permissionButton>
+                    <permissionButton name="/manage/user/managerInfo/listRole" size="small" type="primary" @click="handleRole(scope.row.id)">角色
+                    </permissionButton>
                 </template>
             </el-table-column>
         </el-table>

@@ -8,7 +8,7 @@
             </el-breadcrumb>
         </div>
         <div class="handle-box">
-            <el-button type="primary" @click="save" size="mini">保存</el-button>
+            <permissionButton type="primary" @click="save" size="mini" name="/manage/user/managerInfo/saveRoles">保存</permissionButton>
             <el-button @click="onReturn" size="mini">取消</el-button>
         </div>
         <div style="margin-top: 15px;">
