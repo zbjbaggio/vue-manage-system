@@ -37,6 +37,11 @@ const router = new Router({
                     component: resolve => require(['../components/page/MenuManage/MenuDetail.vue'], resolve)
                 },
                 {
+                    path: '/menuManage/menuTreeDetail',
+                    name: 'menuManage/menuTreeDetail',
+                    component: resolve => require(['../components/page/MenuManage/MenuTreeDetail.vue'], resolve)
+                },
+                {
                     path: '/postageInfo',
                     component: resolve => require(['../components/page/PostageInfo/PostageInfoList.vue'], resolve)
                 },

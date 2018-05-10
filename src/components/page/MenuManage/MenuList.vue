@@ -15,6 +15,7 @@
             <el-button type="primary" icon="el-icon-search" @click="getData">搜索</el-button>
             <el-button type="primary" @click="reset">重置</el-button>
             <el-button type="success" @click="add">新增</el-button>
+            <el-button type="primary" @click="handleMenuTree">修改菜单</el-button>
         </div>
         <el-table :data="table" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange" @sort-change="orderBy" v-loading.body="loading">
             <el-table-column type="selection" width="55"></el-table-column>
@@ -80,6 +81,10 @@
         methods: {
             add() {
                 this.$router.push({name: 'menuManage/menuDetail'});
+            },
+            //授权
+            handleMenuTree() {
+                this.$router.push({name: 'menuManage/menuTreeDetail'});
             },
             handleCurrentChange(val){
                 this.cur_page = val;
