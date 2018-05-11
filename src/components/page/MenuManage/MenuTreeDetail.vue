@@ -44,7 +44,16 @@
                 const self = this;
                 self.loading = true;
                 this.$axios.post("/junjie/manage/user/menu/saveMenuTree", self.data).then((res) => {
-                    this.data = res.data;
+                    if (res.status === 200) {
+                        this.$message.success('保存成功！');
+                    } else {
+                        this.$message.error(res.msg);
+                    }
+                    self.loading = false;
+                }).catch((error) => {
+                    console.log(error);
+                    this.$message.error('保存失败！');
+                    self.loading = false;
                 });
                 self.loading = false;
             },
