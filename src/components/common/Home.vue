@@ -7,7 +7,11 @@
         </div>
     </div>
 </template>
-
+<style>
+    .content{
+        left: 210px;
+    }
+</style>
 <script>
     import vHead from './Header.vue';
     import vSidebar from './Sidebar.vue';

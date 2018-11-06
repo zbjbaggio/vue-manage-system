@@ -30,7 +30,7 @@
             </el-table-column>
             <el-table-column prop="statusStr" label="状态" :formatter="formatter">
             </el-table-column>
-            <el-table-column label="操作" width="290">
+            <el-table-column label="操作" width="290" fixed="right">
                 <template slot-scope="scope">
                     <permissionButton size="small" name="/manage/user/managerInfo/getDetail" @click="handleEdit(scope.row.id)">编辑
                     </permissionButton>

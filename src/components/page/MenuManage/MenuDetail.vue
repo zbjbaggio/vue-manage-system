@@ -32,7 +32,7 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit('form')" :loading="loading">提交</el-button>
+                    <permissionButton name="/manage/user/menu/save" type="primary" @click="onSubmit('form')" :loading="loading">提交</permissionButton>
                     <el-button @click="onReturn">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -45,8 +45,8 @@
                     </el-table-column>
                     <el-table-column label="操作" width="150">
                         <template slot-scope="scope">
-                            <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
-                            <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
+                            <permissionButton name="/manage/user/menu/buttonDetail" size="small" @click="handleEdit(scope.row)">编辑</permissionButton>
+                            <permissionButton name="/manage/user/menu/removeButton" size="small" type="danger" @click="handleDelete(scope.row)">删除</permissionButton>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -61,7 +61,7 @@
                     </el-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button @click="dialogFormVisible = false">取 消</el-button>
-                        <el-button type="primary" @click="buttonOnSubmit('buttonForm')">确 定</el-button>
+                        <permissionButton name="/manage/user/menu/saveButton" type="primary" @click="buttonOnSubmit('buttonForm')">确 定</permissionButton>
                     </div>
                 </el-dialog>
             </div>

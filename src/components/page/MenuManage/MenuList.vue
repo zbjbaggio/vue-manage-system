@@ -7,14 +7,14 @@
             </el-breadcrumb>
         </div>
         <div class="handle-box">
-            <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAll">批量删除</el-button>
+            <permissionButton name="/manage/user/menu/remove" type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAll">批量删除</permissionButton>
             <el-select v-model="select_status" placeholder="筛选状态" class="handle-select mr10">
                 <el-option key="0" :label="item.text" :value="item.value" v-for="item in role_status"></el-option>
             </el-select>
             <el-input v-model="select_word" placeholder="筛选关键词" class="handle-input mr10"></el-input>
-            <el-button type="primary" icon="el-icon-search" @click="getData">搜索</el-button>
-            <el-button type="primary" @click="reset">重置</el-button>
-            <el-button type="success" @click="add">新增</el-button>
+            <permissionButton name="/manage/user/menu/list" icon="el-icon-search" @click="getData">搜索</permissionButton>
+            <permissionButton name="/manage/user/menu/list" type="primary" @click="reset">重置</permissionButton>
+            <permissionButton name="/manage/user/menu/save" type="success" @click="add">新增</permissionButton>
             <el-button type="primary" @click="handleMenuTree">修改菜单</el-button>
         </div>
         <el-table :data="table" border style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange" @sort-change="orderBy" v-loading.body="loading">
